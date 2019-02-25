@@ -10,6 +10,7 @@ import ArticleRec from "../components/article/Article"
 import Register from "../components/register/Register"
 import Recipe from "../components/recipe/Recipe"
 import DaRenDistrict from "../components/district/DaRenDistrict"
+import personalCenter from "../components/user/user"
 
 
 
@@ -33,6 +34,8 @@ export default new Router({
     {path: '/district', name: 'district', component: DaRenDistrict},
     //活动
     {path: '/activity', name: 'activity', component: Activity},
+    //个人中心
+    {path: '/personalCenter', name: 'personalCenter', component: personalCenter},
 
   ]
 })
