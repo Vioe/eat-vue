@@ -9,9 +9,12 @@
               </li>
             </ul>
           </div>
-            <div class="right flex">
-              <router-link to="/login"><div class="login">登入</div></router-link>
-              <router-link to="/register"><div>注册</div></router-link>
+            <div class="right flex flex-h-cen">
+              <div class="flex">
+                <router-link to="/login"><div class="login">登入</div></router-link>
+                <router-link to="/register"><div>注册</div></router-link>
+              </div>
+              <div class="icon"><i class="iconfont icon-gerenzhongxin"></i></div>
             </div>
         </div>
      </div>
@@ -37,7 +40,7 @@
     }
 </script>
 
-<style scoped >
+<style scoped lang="scss">
 .header{
   width: 100%;
   font-size: 16px;
@@ -76,5 +79,8 @@
 }
 .right{
   color: #5e5e5e;
+  .icon{
+
+  }
 }
 </style>
