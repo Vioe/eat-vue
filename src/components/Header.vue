@@ -42,7 +42,7 @@
   width: 100%;
   font-size: 16px;
   position:relative;
-  z-index:999;
+  z-index:9999;
   height: 50px;
   background-color: #daeae8;
   box-shadow:0px 3px 7px 0px rgba(0, 0, 0, 0.21);

@@ -11,15 +11,18 @@
         </div>
       </div>
       <el-tabs type="border-card">
-        <el-tab-pane label="我的菜谱">我的菜谱</el-tab-pane>
-        <el-tab-pane label="我的收藏">
-          <fieldset class="" style="width: 94%;margin: 0 auto;border: 2px solid #d5d5ab;">
-            <legend style="margin-left: 30px; font-size: 16px;padding: 0 10px;">健康信息</legend>
-             <div></div>
-          </fieldset>
+        <el-tab-pane label="我的菜谱">
+            <user-recipe></user-recipe>
         </el-tab-pane>
-        <el-tab-pane label="关注达人">关注达人</el-tab-pane>
-        <el-tab-pane label="参加活动">参加活动</el-tab-pane>
+        <el-tab-pane label="我的收藏">
+            <user-collection></user-collection>
+        </el-tab-pane>
+        <el-tab-pane label="关注达人">
+            <user-attention></user-attention>
+        </el-tab-pane>
+        <el-tab-pane label="参加活动">
+            <user-join-activity></user-join-activity>
+        </el-tab-pane>
       </el-tabs>
     </div>
   </div>
@@ -27,12 +30,22 @@
 </template>
 
 <script>
+  import userCollection from './userCollection'
+  import userAttention from './userAttention'
+  import userJoinActivity from './userJoinActivity'
+  import userRecipe from './userRecipe'
     export default {
-        name: "user",
+      name: "user",
       data(){
           return {
             radio: '1'
           }
+      },
+      components:{
+        userCollection,
+        userAttention,
+        userJoinActivity,
+        userRecipe
       }
     }
 </script>
