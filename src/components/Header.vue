@@ -10,11 +10,22 @@
             </ul>
           </div>
             <div class="right flex flex-h-cen">
-              <div class="flex">
-                <router-link to="/login"><div class="login">登入</div></router-link>
-                <router-link to="/register"><div>注册</div></router-link>
+              <!--<div class="flex">-->
+                <!--<router-link to="/login"><div class="login">登入</div></router-link>-->
+                <!--<router-link to="/register"><div>注册</div></router-link>-->
+              <!--</div>-->
+              <div class="icon">
+                <!--<i class="iconfont icon-gerenzhongxin"></i>-->
+                <el-dropdown :hide-on-click="false">
+                    <span class="el-dropdown-link flex flex-h-cen">
+                      <i class="iconfont icon-gerenzhongxin"></i>余哎呀
+                    </span>
+                    <el-dropdown-menu slot="dropdown">
+                      <el-dropdown-item>个人中心</el-dropdown-item>
+                      <el-dropdown-item>退出</el-dropdown-item>
+                    </el-dropdown-menu>
+                </el-dropdown>
               </div>
-              <div class="icon"><i class="iconfont icon-gerenzhongxin"></i></div>
             </div>
         </div>
      </div>
@@ -80,7 +91,9 @@
 .right{
   color: #5e5e5e;
   .icon{
-
+    i{
+      font-size: 22px;
+    }
   }
 }
 </style>
