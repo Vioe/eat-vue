@@ -1,18 +1,16 @@
 <template>
     <div class="collection">
-      <fieldset class="collection-rep">
-        <legend>菜谱</legend>
-        <div class="flex flex-wrap">
-          <div class="repiceCard flex" v-for="item in 5">
-            <div class="recipeCard-l"><img src="../../../static/homeImg/daily.jpg" alt=""></div>
-            <div class="recipeCard-r">
-              <h4>菜谱名</h4>
-              <div>菜谱简介</div>
-            </div>
+      <div class="inner">
+        <div class="myRecipe" v-for="item in 7">
+          <div class="recipe-Pic">
+            <img src="../../../static/homeImg/daily.jpg" alt="">
+          </div>
+          <div class="recipe-txt flex flex-btw">
+            <div>菜谱名</div>
+            <div><i class="iconfont icon-shanchu"></i></div>
           </div>
         </div>
-      </fieldset>
-
+      </div>
     </div>
 </template>
 
@@ -24,32 +22,23 @@
 
 <style scoped lang="scss">
 .collection{
-  .collection-rep{
-    width: 94%;
+  padding: 10px 0;
+  .inner{
+    width: 920px;
     margin: 0 auto;
-    border: 2px solid #d5d5ab;
-    padding: 10px 30px;
-    legend{
-      margin-left: 30px;
-      font-size: 16px;
-      padding: 0 10px;
-    }
-    .repiceCard{
-      width: 260px;
-      padding: 6px;
-      border: 1px solid #ccc;
-      margin-right: 20px;
-      margin-left: 30px;
-      margin-bottom: 20px;
-      /*box-shadow: 2px 2px 5px #ccc;*/
-      .recipeCard-l{
-        width: 120px;
-        height: 80px;
-        overflow: hidden;
-      }
-      .recipeCard-r{
-        padding-left: 10px;
-      }
+  }
+  .myRecipe{
+    width: 200px;
+    overflow: hidden;
+    border: 4px solid white;
+    box-shadow: 0 0 20px #ccc;
+    border-radius: 4px;
+    margin-bottom: 20px;
+    margin-left: 15px;
+    margin-right: 15px;
+    float: left;
+    .recipe-txt{
+      padding: 10px 15px;
     }
   }
 }

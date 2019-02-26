@@ -18,7 +18,7 @@
                 <!--<i class="iconfont icon-gerenzhongxin"></i>-->
                 <el-dropdown :hide-on-click="false">
                     <span class="el-dropdown-link flex flex-h-cen">
-                      <i class="iconfont icon-gerenzhongxin"></i>余哎呀
+                      <i class="iconfont icon-gerenzhongxin1"></i>余哎呀
                     </span>
                     <el-dropdown-menu slot="dropdown">
                       <el-dropdown-item>个人中心</el-dropdown-item>
@@ -40,7 +40,7 @@
              {"name":"首页","top":"/"},
              {"name":"逛菜谱","top":"/recipe"},
              {"name":"食享社区","top":"/activity"},
-             {"name":"达人区","top":"/personalCenter"}
+             {"name":"达人区","top":"/addRecipe"}
            ],
            num:0
          }
