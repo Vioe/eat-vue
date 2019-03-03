@@ -12,6 +12,7 @@ import Recipe from "../components/recipe/Recipe"
 import DaRenDistrict from "../components/district/DaRenDistrict"
 import personalCenter from "../components/user/user"
 import addRecipe from "../components/recipe/addRecipe"
+import recipeDetail from "../components/recipe/recipeDetail"
 
 
 
@@ -39,6 +40,6 @@ export default new Router({
     {path: '/personalCenter', name: 'personalCenter', component: personalCenter},
     //写菜谱
     {path: '/addRecipe', name: 'addRecipe', component: addRecipe},
-
+    {path: '/recipe/recipeDetail', name: 'recipeDetail', component: recipeDetail}
   ]
 })

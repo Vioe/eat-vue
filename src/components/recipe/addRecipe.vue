@@ -13,7 +13,9 @@
               <div>
                 <label for="recipe">
                   <img class="brower" :src="updatePic" alt="">
-                  <i v-if="showUp" class="icon iconfont icon-jia3"></i>
+                  <div class="recipeBig flex flex-cen" v-if="showUp">
+                    <i class="icon iconfont icon-jia3"></i>
+                  </div>
                 </label>
               </div>
               <input type="file"
@@ -65,29 +67,31 @@
             <el-form-item label="食材(名稱15字內，份量10字內，皆為必填!)">
               <div v-for="(obj,key) in form.foodlist">
                 <el-row style="margin-bottom: 10px">
-                  <el-col :span="8">
-                    <el-input
-                      placeholder="食材名称"
-                      v-model="obj.Name"
-                      clearable>
-                    </el-input>
-                  </el-col>
-                  <el-col :span="6" :offset="2">
-                    <el-input placeholder="数量"
-                              v-model="obj.Num"
-                              clearable>
-                    </el-input>
-                  </el-col>
-                  <el-col :span="2"
-                          :push="1"
-                          @click.native="delFoodList(form.foodlist,key)"
-                         >
-                    <i class="el-icon-circle-close-outline"
-                       style="font-size: 30px;vertical-align: middle;color:red"></i>
-                  </el-col>
+                  <div class="flex flex-h-cen">
+                    <el-col :span="8">
+                      <el-input
+                        placeholder="食材名称"
+                        v-model="obj.Name"
+                        clearable>
+                      </el-input>
+                    </el-col>
+                    <el-col :span="6" :offset="2">
+                      <el-input placeholder="数量"
+                                v-model="obj.Num"
+                                clearable>
+                      </el-input>
+                    </el-col>
+                    <el-col :span="2"
+                            :push="1"
+                            @click.native="delFoodList(form.foodlist,key)"
+                    >
+                      <i class="el-icon-circle-close-outline"
+                         style="font-size: 30px;color:#7c6254;"></i>
+                    </el-col>
+                  </div>
+
                 </el-row>
               </div>
-
               <el-row>
                 <el-button style="width: 70%; margin-top: 15px"
                            type="success"
@@ -113,8 +117,10 @@
                   <!-- 图片上传 -->
                   <div class="leftPhoto">
                     <label :for="`step${key}`">
-                      <!--<i v-if="showUp" class="icon iconfont icon-jia3" style="font-size: 300px"></i>-->
-                      <img src="../../../static/headPic/userHead.jpg" width="300px" alt="" style="margin-left: 12%">
+                      <div class="stepPic flex flex-cen" v-if="showUp">
+                        <i class="icon iconfont icon-jia3"></i>
+                      </div>
+                      <!--<img src="../../../static/headPic/userHead.jpg" width="250px" alt="" style="margin-left: 12%">-->
                     </label>
                     <input type="file"
                            :id="`step${key}`"
@@ -131,10 +137,6 @@
                               :push="1"
                               @click.native="delFoodList(form.steplist,key)"
                               >
-                        <!--<i class="el-icon-circle-close-outline"
-                           v-if="icoChange.stepIco[key]"></i>
-                        <i class="el-icon-circle-close"
-                           v-else></i>-->
                         <i class="el-icon-circle-close-outline"></i>
                       </el-col>
 
@@ -142,10 +144,6 @@
                               :push="1"
                               @click.native="addFoodList(form.steplist,key)"
                       >
-                        <!--<i class="el-icon-circle-plus-outline"
-                           v-if="icoChange.stepIco[key*2]"></i>
-                        <i class="el-icon-circle-plus"
-                           v-else></i>-->
                         <i class="el-icon-circle-plus-outline"></i>
                       </el-col>
                     </div>
@@ -284,9 +282,31 @@
 </script>
 
 <style scoped lang="scss">
+  /deep/ .el-button--primary{
+    background-color: #91bfbf;
+    border-color: #91bfbf;
+  }
+  /deep/ .el-button--success{
+    background-color: #91bfbf;
+    border-color: #91bfbf;
+  }
+  /deep/ .el-form-item__content{
+    line-height: normal;
+    font-size:0;
+  }
+.stepPic{
+  width: 250px;
+  height:250px;
+  border: 1px solid #ccc;
+  margin-left: 12%;
+}
+.recipeBig{
+   width: 100px;
+   height: 100px;
+   border: 1px solid #ccc;
+ }
 .icon{
-  font-size: 64px;
-  border: 2px solid #ccc;
+  font-size: 20px;
 }
 .recipeContent {
   margin: 40px auto;
