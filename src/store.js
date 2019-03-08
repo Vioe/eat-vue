@@ -6,7 +6,7 @@ Vue.use(Vuex);
 //导出Vuex的实例
 export default new Vuex.Store({
   state: {
-
+    data: '测试数据'
   },
   getters: {
 
