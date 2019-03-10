@@ -10,19 +10,20 @@
             </ul>
           </div>
             <div class="right flex flex-h-cen">
-              <!--<div class="flex">-->
-                <!--<router-link to="/login"><div class="login">登入</div></router-link>-->
-                <!--<router-link to="/register"><div>注册</div></router-link>-->
-              <!--</div>-->
-              <div class="icon">
-                <!--<i class="iconfont icon-gerenzhongxin"></i>-->
+              <!--未登入-->
+              <div class="flex" v-if="isLogin">
+                <router-link to="/login"><div class="login">登入</div></router-link>
+                <router-link to="/register"><div>注册</div></router-link>
+              </div>
+              <!--登入-->
+              <div class="icon" v-else>
                 <el-dropdown :hide-on-click="false">
                     <span class="el-dropdown-link flex flex-h-cen">
-                      <i class="iconfont icon-gerenzhongxin1"></i>余哎呀
+                      <i class="iconfont people icon-gerenzhongxin1"></i>余哎呀
                     </span>
                     <el-dropdown-menu slot="dropdown">
-                      <el-dropdown-item>个人中心</el-dropdown-item>
-                      <el-dropdown-item>退出</el-dropdown-item>
+                      <router-link to="/personalCenter"><el-dropdown-item>个人中心</el-dropdown-item></router-link>
+                      <el-dropdown-item @click.native="setOut">退出</el-dropdown-item>
                     </el-dropdown-menu>
                 </el-dropdown>
               </div>
@@ -32,6 +33,7 @@
 </template>
 
 <script>
+    import {mapGetters} from "vuex"
     export default {
       name: "Header",
       data(){
@@ -40,13 +42,22 @@
              {"name":"首页","top":"/"},
              {"name":"逛菜谱","top":"/recipe"},
              {"name":"食享社区","top":"/activity"},
-             {"name":"达人区","top":"/recipe/recipeDetail"}
+             {"name":"达人区","top":"/personalCenter"}
            ],
-           num:0
+           num:0,
+           login: null
          }
       },
+      computed: mapGetters([
+        "isLogin",
+        "userId"
+      ]),
       methods: {
-
+        setOut(){
+          isLogin = true
+          localStorage.removeItem("userId");
+          // location.href = "/"
+        }
       }
     }
 </script>
@@ -93,6 +104,7 @@
   .icon{
     i{
       font-size: 22px;
+      margin-right: 5px;
     }
   }
 }

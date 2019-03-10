@@ -18,7 +18,7 @@
         <el-row>
           <el-col :span="15">
             <el-form-item label="验证码">
-              <el-input  placeholder="请输入验证码"></el-input>
+              <el-input  placeholder="请输入验证码" v-model="inputNum"></el-input>
             </el-form-item>
           </el-col>
           <el-col :span="8" :offset="1">
@@ -26,7 +26,7 @@
           </el-col>
         </el-row>
         <el-row>
-          <div class="w-all next text-center" @click="stepNum=2">下一步</div>
+          <div class="w-all next text-center" @click="step1">下一步</div>
         </el-row>
       </el-form>
     </div>
@@ -38,17 +38,17 @@
           <el-input v-model="form.name" placeholder="请输入用户名"></el-input>
         </el-form-item>
         <el-form-item class="text-center" label="设置密码">
-          <el-input v-model="form.name" placeholder="请输入输入密码"></el-input>
+          <el-input v-model="form.password" placeholder="请输入输入密码"></el-input>
         </el-form-item>
         <el-form-item class="text-center" label="确认密码">
-          <el-input v-model="form.name" placeholder="请输入确认密码"></el-input>
+          <el-input v-model="form.password1" placeholder="请输入确认密码"></el-input>
         </el-form-item>
         <el-form-item class="text-center" label="性别">
-          <el-radio v-model="radio" label="1">男</el-radio>
-          <el-radio v-model="radio" label="2">女</el-radio>
+          <el-radio v-model="form.radio" label="1">男</el-radio>
+          <el-radio v-model="form.radio" label="2">女</el-radio>
         </el-form-item>
         <el-row>
-          <div class="w-all next text-center" @click="stepNum=3">下一步</div>
+          <div class="w-all next text-center" @click="step2">下一步</div>
         </el-row>
       </el-form>
     </div>
@@ -74,17 +74,19 @@
     data(){
       return {
         stepNum: 1,
-        form:{},
+        form:{
+          radio:'1'
+        },
         items:[
           {"name" : "创建账号"},
           {"name" : "设置省份信息"},
           {"name" : "等待认证"}
         ],
-        radio:'1',
         Num:"",
         inputTel:"",
         btnName:"发送验证码",
         count:60,
+        inputNum: ''
       }
     },
     methods:{
@@ -128,6 +130,12 @@
             clearTimeout(time);
           }
         },1000)
+      },
+      step1(){
+        this.stepNum = 2
+      },
+      step2(){
+        this.stepNum = 3
       }
     }
 

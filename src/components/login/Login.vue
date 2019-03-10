@@ -30,22 +30,28 @@
       methods:{
         toLogin(){
           let _this=this;
-          this.$ajax.post('/api/login',{username:_this.userName,userpassword: _this.userPwd}).then(res => {
-            console.log(res.data.data)
-            if(res.data.data == 1){
-              alert("用户名不存在！")
-              this.userName ="";
-              this.userPwd = "";
-            }else if(res.data.data == 2){
-              alert("密码错误！")
-              this.userPwd = "";
-            }else if(res.data.data == 3){
-              alert("登入成功!")
-              this.$router.replace({path:"/"})
-            }else{
-              alert("服务器错误！")
-            }
-          })
+          if(_this.userName != "" && _this.userPwd !=""){
+            this.$ajax.post('/api/login',{username:_this.userName,userpassword: _this.userPwd}).then(res => {
+              console.log(res.data.data.num)
+              if(res.data.data.num == 1){
+                alert("用户名不存在！")
+                this.userName ="";
+                this.userPwd = "";
+              }else if(res.data.data.num == 2){
+                alert("密码错误！")
+                this.userPwd = "";
+              }else if(res.data.data.num == 3){
+                alert("登入成功!")
+                localStorage.setItem("userId", res.data.data.userId)
+                location.href = "/"
+                // this.$router.replace({path:"/"})
+              }else{
+                alert("服务器错误！")
+              }
+            })
+          }else{
+            alert("用户名或密码不能为空！")
+          }
         }
 
       },
