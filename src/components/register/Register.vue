@@ -18,7 +18,7 @@
         <el-row>
           <el-col :span="15">
             <el-form-item label="验证码">
-              <el-input  placeholder="请输入验证码" v-model="inputNum"></el-input>
+              <el-input  placeholder="请输入验证码" v-model="vCode"></el-input>
             </el-form-item>
           </el-col>
           <el-col :span="8" :offset="1">
@@ -60,8 +60,8 @@
       <h3 class="text-center steps-tit">哎呀，注册成功</h3>
       <div class="step3-txt">爱生活，从热爱美食开始。自己动手去做一做那些让认身心灵都感受到愉悦的美食，当你专心去做一件事情的时候，周围的一切都开始变得美好起来。</div>
       <el-row>
-        <router-link to="/">
-          <div class="w-all next text-center" >回到首页</div>
+        <router-link to="/login">
+          <div class="w-all next text-center" >去登入</div>
         </router-link>
       </el-row>
     </div>
@@ -75,6 +75,9 @@
       return {
         stepNum: 1,
         form:{
+          name: '',
+          password: '',
+          password1: '',
           radio:'1'
         },
         items:[
@@ -82,11 +85,11 @@
           {"name" : "设置省份信息"},
           {"name" : "等待认证"}
         ],
-        Num:"",
+        Num:1111,
         inputTel:"",
         btnName:"发送验证码",
         count:60,
-        inputNum: ''
+        vCode: ''
       }
     },
     methods:{
@@ -132,10 +135,49 @@
         },1000)
       },
       step1(){
-        this.stepNum = 2
+        if(this.inputTel != '' && this.vCode !=''){
+          if(!(/^1[34578]\d{9}$/.test(this.inputTel))){
+            alert("手机号码有误，请重填");
+            return false;
+          }else{
+            if(this.vCode == this.Num ){
+              this.stepNum = 2
+            }else{
+              alert('哎呀妈呀验证码错了！')
+            }
+          }
+        }else{
+          alert('手机号验证码不能为空哦！')
+        }
       },
       step2(){
-        this.stepNum = 3
+        console.log(this.form.name)
+        if(this.form.name !="" && this.form.password !="" && this.form.password1 !=""){
+            this.$ajax.get('/api/users').then(res =>{
+              console.log()
+              for(let i=0; i<res.data.data.length;i++){
+                if(this.form.name == res.data.data[i].userName){
+                  alert('用户名已经存在！请重新输入')
+                  return;
+                }
+              }
+              if(this.form.password == this.form.password1){
+                let param = {
+                  form: this.form,
+                  inputTel: this.inputTel
+                }
+                this.$ajax.post('/api/users/add',param).then(res =>{
+
+                })
+                this.stepNum = 3
+              }else{
+                alert('两次输入的密码不一致哦！')
+              }
+            })
+        }else{
+          alert('请填写完整！')
+        }
+
       }
     }
 

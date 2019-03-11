@@ -54,9 +54,8 @@
       ]),
       methods: {
         setOut(){
-          isLogin = true
           localStorage.removeItem("userId");
-          // location.href = "/"
+          location.href = "/"
         }
       }
     }
