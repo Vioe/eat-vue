@@ -13,7 +13,7 @@
       <h3 class="text-center tit">注册</h3>
       <el-form ref="form" :model="form" label-width="80px">
         <el-form-item class="text-center" label="手机号">
-          <el-input  placeholder="请输入手机号" v-model="inputTel"></el-input>
+          <el-input  placeholder="请输入手机号" v-model="form.inputTel"></el-input>
         </el-form-item>
         <el-row>
           <el-col :span="15">
@@ -78,6 +78,7 @@
           name: '',
           password: '',
           password1: '',
+          inputTel:"",
           radio:'1'
         },
         items:[
@@ -86,7 +87,6 @@
           {"name" : "等待认证"}
         ],
         Num:1111,
-        inputTel:"",
         btnName:"发送验证码",
         count:60,
         vCode: ''
@@ -94,7 +94,7 @@
     },
     methods:{
       sendCode(){
-        if(this.inputTel){
+        if(this.form.inputTel){
           this.Num="";
           let num=this.Num;
           for(let i=0; i<6;i++){
@@ -103,7 +103,7 @@
           console.log(num)
           this.Num=num;
           $.ajax({
-            url: 'http://v.juhe.cn/sms/send?mobile='+this.inputTel+'&tpl_id=128061&tpl_value=%23code%23%3D'+this.Num+'&key=71fa9233a2cb7afe1eac2ee9c7356e1f',
+            url: 'http://v.juhe.cn/sms/send?mobile='+this.form.inputTel+'&tpl_id=128061&tpl_value=%23code%23%3D'+this.Num+'&key=71fa9233a2cb7afe1eac2ee9c7356e1f',
             type: 'GET',
             dataType: 'JSONP',
             success: function (res) {
@@ -135,8 +135,8 @@
         },1000)
       },
       step1(){
-        if(this.inputTel != '' && this.vCode !=''){
-          if(!(/^1[34578]\d{9}$/.test(this.inputTel))){
+        if(this.form.inputTel != '' && this.vCode !=''){
+          if(!(/^1[34578]\d{9}$/.test(this.form.inputTel))){
             alert("手机号码有误，请重填");
             return false;
           }else{
@@ -164,10 +164,9 @@
               if(this.form.password == this.form.password1){
                 let param = {
                   form: this.form,
-                  inputTel: this.inputTel
                 }
                 this.$ajax.post('/api/users/add',param).then(res =>{
-
+                  console.log(res)
                 })
                 this.stepNum = 3
               }else{
@@ -177,10 +176,8 @@
         }else{
           alert('请填写完整！')
         }
-
       }
     }
-
   }
 </script>
 
