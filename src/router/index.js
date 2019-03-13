@@ -40,6 +40,7 @@ export default new Router({
     {path: '/personalCenter', name: 'personalCenter', component: personalCenter},
     //写菜谱
     {path: '/addRecipe', name: 'addRecipe', component: addRecipe},
+    //菜谱详情
     {path: '/recipe/recipeDetail', name: 'recipeDetail', component: recipeDetail}
   ]
 })

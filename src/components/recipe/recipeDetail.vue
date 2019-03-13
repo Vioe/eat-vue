@@ -45,6 +45,8 @@
             </div>
           </div>
         </div>
+        <!--菜谱评论-->
+        <recipe-comment></recipe-comment>
       </div>
       <!--右边热门菜谱-->
       <div class="right">
@@ -62,6 +64,7 @@
 </template>
 
 <script>
+    import recipeComment from './recipeComment'
     export default {
         name: "recipeDetail",
       data(){
@@ -73,6 +76,9 @@
               {name: '米粉',num: '10g'}
             ]
           }
+      },
+      components:{
+        recipeComment
       },
       methods:{
 

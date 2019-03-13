@@ -42,7 +42,7 @@
              {"name":"首页","top":"/"},
              {"name":"逛菜谱","top":"/recipe"},
              {"name":"食享社区","top":"/activity"},
-             {"name":"达人区","top":"/personalCenter"}
+             {"name":"达人区","top":"/recipe/recipeDetail"}
            ],
            num:0,
            login: null
