@@ -41,7 +41,7 @@
            lists:[
              {"name":"首页","top":"/"},
              {"name":"逛菜谱","top":"/recipe"},
-             {"name":"食享社区","top":"/activity"},
+             {"name":"食享社区","top":"/article1"},
              {"name":"达人区","top":"/recipe/recipeDetail"}
            ],
            num:0,
