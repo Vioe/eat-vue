@@ -10,7 +10,7 @@
 <script>
 import articleList from './articleList'
 export default {
-name: "article",
+name: "articleRec",
 components:{
 'article-list': articleList,
 }
