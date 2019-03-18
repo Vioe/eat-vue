@@ -13,6 +13,7 @@ import DaRenDistrict from "../components/district/DaRenDistrict"
 import personalCenter from "../components/user/user"
 import addRecipe from "../components/recipe/addRecipe"
 import recipeDetail from "../components/recipe/recipeDetail"
+import reviseInfo from "../components/user/reviseInfo"
 
 
 
@@ -41,6 +42,8 @@ export default new Router({
     //写菜谱
     {path: '/addRecipe', name: 'addRecipe', component: addRecipe},
     //菜谱详情
-    {path: '/recipe/recipeDetail', name: 'recipeDetail', component: recipeDetail}
+    {path: '/recipe/recipeDetail', name: 'recipeDetail', component: recipeDetail},
+    //用户信息修改
+    {path: '/reviseInfo', name: 'reviseInfo', component: reviseInfo}
   ]
 })

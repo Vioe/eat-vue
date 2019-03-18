@@ -1,23 +1,27 @@
 <template>
-  <div class="contentLogin">
-    <div class="login">
-      <h3 class="text-center tit">登入</h3>
-      <el-form ref="form" :model="form" label-width="80px">
-        <el-form-item class="text-center" label="用户名">
-          <el-input v-model="userName" placeholder="请输入用户名"></el-input>
-        </el-form-item>
-        <el-form-item class="text-center" label="密码">
-          <el-input v-model="userPwd" placeholder="请输入密码"></el-input>
-        </el-form-item>
-        <el-row>
-          <div class="w-all next text-center" @click="toLogin" >登入</div>
-        </el-row>
-      </el-form>
+  <div>
+    <div class="contentLogin">
+      <div class="login">
+        <h3 class="text-center tit">登入</h3>
+        <el-form ref="form" :model="form" label-width="80px">
+          <el-form-item class="text-center" label="用户名">
+            <el-input v-model="userName" placeholder="请输入用户名"></el-input>
+          </el-form-item>
+          <el-form-item class="text-center" label="密码">
+            <el-input v-model="userPwd" placeholder="请输入密码"></el-input>
+          </el-form-item>
+          <el-row>
+            <div class="w-all next text-center" @click="toLogin" >登入</div>
+          </el-row>
+        </el-form>
+      </div>
     </div>
+    <div class="foot"><my-footer></my-footer></div>
   </div>
 </template>
 
 <script>
+  import appFooter from "../Footer"
     export default {
       name: "login",
       data(){
@@ -26,6 +30,9 @@
           userName:"",
           userPwd:"",
         }
+      },
+      components:{
+        "my-footer":appFooter
       },
       methods:{
         toLogin(){
@@ -64,7 +71,7 @@
     margin: 0 auto;
     position: relative;
     top:150px;
-    margin-bottom:200px;
+    /*margin-bottom:200px;*/
     /*background-color: #ebf6df;*/
   }
   /*修改element样式*/
@@ -72,9 +79,14 @@
     border-color: #91bfbf !important;
   }
   /deep/ .el-form-item__label{
-    width: 60px !important;
-    text-align: center !important;
-    padding:0;
+    /*width: 60px !important;*/
+    /*text-align: center !important;*/
+    /*padding:0;*/
+    text-align:justify;
+    text-justify:distribute-all-lines;/*ie6-8*/
+    text-align-last:justify;/* ie9*/
+    -moz-text-align-last:justify;/*ff*/
+    -webkit-text-align-last:justify;/*chrome 20+*/
   }
   /*element结束*/
   .login{
@@ -122,5 +134,11 @@
       font-size:11px;
       padding:0 0 50px 0;
     }
+  }
+  .foot{
+    position: fixed;
+    bottom: 0;
+    left:0;
+    right: 0;
   }
 </style>

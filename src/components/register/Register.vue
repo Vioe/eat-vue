@@ -1,74 +1,79 @@
 <template>
-  <div class="contentRegister">
-    <!--验证进度条-->
-    <ul class="step flex flex-cen">
-      <li class="step-c flex flex-cen" v-for="(num,index) in 3" :class="{'active':index+1<=stepNum? true:false}"><span class="text-center" :class="{'active':index+1<=stepNum? true:false}">{{index+1}}</span></li>
-    </ul>
-    <ul class="flex flex-cen">
-      <li class="step-t" v-for="(item,index) in items" :class="{'active-t':index+1<=stepNum? true:false}">{{item.name}}</li>
-    </ul>
+  <div>
+    <div class="contentRegister">
+      <!--验证进度条-->
+      <ul class="step flex flex-cen">
+        <li class="step-c flex flex-cen" v-for="(num,index) in 3" :class="{'active':index+1<=stepNum? true:false}"><span class="text-center" :class="{'active':index+1<=stepNum? true:false}">{{index+1}}</span></li>
+      </ul>
+      <ul class="flex flex-cen">
+        <li class="step-t" v-for="(item,index) in items" :class="{'active-t':index+1<=stepNum? true:false}">{{item.name}}</li>
+      </ul>
 
-    <!--注册框step1-->
-    <div class="register" v-if="stepNum==1">
-      <h3 class="text-center tit">注册</h3>
-      <el-form ref="form" :model="form" label-width="80px">
-        <el-form-item class="text-center" label="手机号">
-          <el-input  placeholder="请输入手机号" v-model="form.inputTel"></el-input>
-        </el-form-item>
-        <el-row>
-          <el-col :span="15">
-            <el-form-item label="验证码">
-              <el-input  placeholder="请输入验证码" v-model="vCode"></el-input>
-            </el-form-item>
-          </el-col>
-          <el-col :span="8" :offset="1">
-            <button class="code text-center" @click="sendCode" id="co">{{btnName}}</button>
-          </el-col>
-        </el-row>
-        <el-row>
-          <div class="w-all next text-center" @click="step1">下一步</div>
-        </el-row>
-      </el-form>
-    </div>
-    <!--注册框step2-->
-    <div class="register" v-else-if="stepNum==2">
-      <h3 class="text-center tit">注册</h3>
-      <el-form ref="form" :model="form" label-width="80px">
-        <el-form-item class="text-center" label="用户昵称">
-          <el-input v-model="form.name" placeholder="请输入用户名"></el-input>
-        </el-form-item>
-        <el-form-item class="text-center" label="设置密码">
-          <el-input v-model="form.password" placeholder="请输入输入密码"></el-input>
-        </el-form-item>
-        <el-form-item class="text-center" label="确认密码">
-          <el-input v-model="form.password1" placeholder="请输入确认密码"></el-input>
-        </el-form-item>
-        <el-form-item class="text-center" label="性别">
-          <el-radio v-model="form.radio" label="1">男</el-radio>
-          <el-radio v-model="form.radio" label="2">女</el-radio>
-        </el-form-item>
-        <el-row>
-          <div class="w-all next text-center" @click="step2">下一步</div>
-        </el-row>
-      </el-form>
-    </div>
-    <!--注册框step3-->
-    <div class="register" v-else>
-      <div class="ico">
-        <i class="iconfont icon-gouxuan"></i>
+      <!--注册框step1-->
+      <div class="register" v-if="stepNum==1">
+        <h3 class="text-center tit">注册</h3>
+        <el-form ref="form" :model="form" label-width="80px">
+          <el-form-item class="text-center" label="手机号">
+            <el-input  placeholder="请输入手机号" v-model="form.inputTel"></el-input>
+          </el-form-item>
+          <el-row>
+            <el-col :span="15">
+              <el-form-item label="验证码">
+                <el-input  placeholder="请输入验证码" v-model="vCode"></el-input>
+              </el-form-item>
+            </el-col>
+            <el-col :span="8" :offset="1">
+              <button class="code text-center" @click="sendCode" id="co">{{btnName}}</button>
+            </el-col>
+          </el-row>
+          <el-row>
+            <div class="w-all next text-center" @click="step1">下一步</div>
+          </el-row>
+        </el-form>
       </div>
-      <h3 class="text-center steps-tit">哎呀，注册成功</h3>
-      <div class="step3-txt">爱生活，从热爱美食开始。自己动手去做一做那些让认身心灵都感受到愉悦的美食，当你专心去做一件事情的时候，周围的一切都开始变得美好起来。</div>
-      <el-row>
-        <router-link to="/login">
-          <div class="w-all next text-center" >去登入</div>
-        </router-link>
-      </el-row>
+      <!--注册框step2-->
+      <div class="register" v-else-if="stepNum==2">
+        <h3 class="text-center tit">注册</h3>
+        <el-form ref="form" :model="form" label-width="80px">
+          <el-form-item class="text-center" label="用户昵称">
+            <el-input v-model="form.name" placeholder="请输入用户名"></el-input>
+          </el-form-item>
+          <el-form-item class="text-center" label="设置密码">
+            <el-input v-model="form.password" placeholder="请输入输入密码"></el-input>
+          </el-form-item>
+          <el-form-item class="text-center" label="确认密码">
+            <el-input v-model="form.password1" placeholder="请输入确认密码"></el-input>
+          </el-form-item>
+          <el-form-item class="text-center" label="性别">
+            <el-radio v-model="form.radio" label="1">男</el-radio>
+            <el-radio v-model="form.radio" label="2">女</el-radio>
+          </el-form-item>
+          <el-row>
+            <div class="w-all next text-center" @click="step2">下一步</div>
+          </el-row>
+        </el-form>
+      </div>
+      <!--注册框step3-->
+      <div class="register" v-else>
+        <div class="ico">
+          <i class="iconfont icon-gouxuan"></i>
+        </div>
+        <h3 class="text-center steps-tit">哎呀，注册成功</h3>
+        <div class="step3-txt">爱生活，从热爱美食开始。自己动手去做一做那些让认身心灵都感受到愉悦的美食，当你专心去做一件事情的时候，周围的一切都开始变得美好起来。</div>
+        <el-row>
+          <router-link to="/login">
+            <div class="w-all next text-center" >去登入</div>
+          </router-link>
+        </el-row>
+      </div>
     </div>
+    <div class="foot"><my-footer></my-footer></div>
   </div>
+
 </template>
 
 <script>
+  import appFooter from "../Footer"
   export default {
     name: "register",
     data(){
@@ -91,6 +96,9 @@
         count:60,
         vCode: ''
       }
+    },
+    components:{
+      "my-footer":appFooter
     },
     methods:{
       sendCode(){
@@ -196,9 +204,14 @@
     border-color: #91bfbf !important;
   }
   /deep/ .el-form-item__label{
-    width: 60px !important;
-    text-align: center !important;
-    padding:0;
+    /*width: 60px !important;*/
+    /*text-align: center !important;*/
+    /*padding:0;*/
+    text-align:justify;
+    text-justify:distribute-all-lines;/*ie6-8*/
+    text-align-last:justify;/* ie9*/
+    -moz-text-align-last:justify;/*ff*/
+    -webkit-text-align-last:justify;/*chrome 20+*/
   }
   /deep/ .el-radio__input.is-checked .el-radio__inner{
     border-color: #c1a174 !important;
@@ -290,5 +303,11 @@
       font-size:11px;
       padding:0 0 50px 0;
     }
+  }
+  .foot{
+    position: fixed;
+    bottom: 0;
+    left:0;
+    right: 0;
   }
 </style>

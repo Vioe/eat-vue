@@ -64,7 +64,7 @@
                 <el-option label="8+" value="8+"></el-option>
               </el-select>
             </el-form-item>
-            <el-form-item label="食材(名稱15字內，份量10字內，皆為必填!)">
+            <el-form-item label="食材(名称15字內，份量10字內，皆为必填!)">
               <div v-for="(obj,key) in form.foodlist">
                 <el-row style="margin-bottom: 10px">
                   <div class="flex flex-h-cen">
@@ -111,13 +111,14 @@
                    :model="form"
                    label-width="80px"
                    label-position="top">
-            <el-form-item label="步骤(可以一次上傳多張圖片)">
+            <el-form-item label="步骤(可以一次上传多张图片)">
               <div v-for="(obj,key) in form.steplist" class="stepContent">
                 <div style="overflow: hidden; width: 100%">
                   <!-- 图片上传 -->
                   <div class="leftPhoto">
                     <label :for="`step${key}`">
-                      <div class="stepPic flex flex-cen" v-if="showUp">
+                      <img class="brower" src="" alt="">
+                      <div class="stepPic flex flex-cen">
                         <i class="icon iconfont icon-jia3"></i>
                       </div>
                       <!--<img src="../../../static/headPic/userHead.jpg" width="250px" alt="" style="margin-left: 12%">-->

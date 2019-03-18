@@ -12,11 +12,18 @@ import ElementUI from 'element-ui'
 import 'element-ui/lib/theme-chalk/index.css'
 import store from './store'
 import global_ from './components/global.vue'
-// import axios from 'axios'
+import axios from 'axios'
 // Vue.prototype.$ajax = axios;
 // axios.defaults.baseURL=global_.BASE_URL;
 
 // Vue.prototype.GLOBAL = global_;
+var instance = axios.create({
+  baseURL:'',
+  timeout:5000,
+  headers:{"Content-Type":"multipart/form-data"}
+});
+
+Vue.prototype.instance=instance;
 Vue.use(VueAwesomeSwiper)
 Vue.use(ElementUI)
 

@@ -7,7 +7,7 @@
           <div class="userHead">
             <img src="../../../static/headPic/userHead.jpg" class="img" alt="">
           </div>
-          <div class="text-center userName">余哎呀</div>
+          <div class="text-center userName">余哎呀 <router-link to="/reviseInfo"><i class="iconfont icon-edit"></i></router-link></div>
         </div>
       </div>
       <el-tabs type="border-card">
@@ -70,6 +70,9 @@
       }
       .userName{
         padding-top:10px;
+        i{
+          margin-left:5px;
+        }
       }
     }
     .tab{

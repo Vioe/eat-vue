@@ -74,11 +74,13 @@
       <img src="../../../static/homeImg/toTop.png" alt="">
       <div class="text-center">Back</div>
     </div>
+    <my-footer></my-footer>
   </div>
 </template>
 
 <script>
   import homeSwiper from "./homeSwiper"
+  import appFooter from "../Footer"
     export default {
         name: "home",
       data(){
@@ -88,7 +90,8 @@
           }
       },
       components:{
-        "home-swiper":homeSwiper
+        "home-swiper":homeSwiper,
+        "my-footer":appFooter
       },
       mounted(){
           window.addEventListener('scroll',this.handleScroll)
