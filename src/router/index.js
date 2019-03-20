@@ -42,7 +42,7 @@ export default new Router({
     //写菜谱
     {path: '/addRecipe', name: 'addRecipe', component: addRecipe},
     //菜谱详情
-    {path: '/recipe/recipeDetail', name: 'recipeDetail', component: recipeDetail},
+    {path: '/recipeDetail/:detailsId', name: 'recipeDetail', component: recipeDetail},
     //用户信息修改
     {path: '/reviseInfo', name: 'reviseInfo', component: reviseInfo}
   ]

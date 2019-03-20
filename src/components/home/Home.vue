@@ -9,9 +9,9 @@
         <!--热门文章列表-->
         <div class="hotArticle">
           <div class="articleTit">热门文章</div>
-          <div class="articleList flex" v-for="item in 3">
-            <div class="articleLeft"><img class="img" src="https://cp1.douguo.com/upload/caiku/1/c/f/600x400_1ca013a692332b08c12916d3afc81aef.jpg" alt=""></div>
-            <div class="articleRight flex-f1 line-clamp3 ">65℃度以上热饮成高危食物65℃度以上热饮成高危食物65℃度以上热饮成高危食物65℃度以上热饮成高危食物65℃度以上热饮成高危食物65℃度以上热饮成高危食物65℃度以上热饮成高危食物65℃度以上热饮成高危食物</div>
+          <div class="articleList flex" v-for="item in threeArticle">
+            <div class="articleLeft"><img class="img" :src="item.articlePic" alt=""></div>
+            <div class="articleRight flex-f1 line-clamp3 ">{{item.articleContent}}</div>
           </div>
         </div>
       </div>
@@ -20,19 +20,21 @@
         <div class="dailyTit color-w w-all h-five">每日推荐</div>
         <!--图片列表-->
         <div class="dailyCtnAll flex flex-btw flex-wrap">
-          <div class="dailyList" v-for="dailyList in 8">
-            <div class="dailyBackUrl">
-              <img src="https://cp1.douguo.com/upload/caiku/2/8/0/600x400_28fb4b64dd09e808979363d750a9ad50.jpg" class="" alt="">
-            </div>
-            <div class="dailyName">菜谱名</div>
+          <div class="dailyList" v-for="dailyList in severRecipe">
+            <router-link :to="'/recipeDetail/'+dailyList.detailsId">
+              <div class="dailyBackUrl">
+                <img :src="dailyList.recipeCoverImg" class="" alt="">
+              </div>
+            </router-link>
+            <div class="dailyName">{{dailyList.recipeName}}</div>
             <div class="dailyCtn flex flex-h-cen flex-btw">
               <div class="ctnLeft flex flex-h-cen">
                 <div class="userPic">
-                  <img src="../../../static/homeImg/article.jpg" class="img" alt="">
+                  <img :src="dailyList.headPhoto" class="img" alt="">
                 </div>
-                <div class="userName">小可爱</div>
+                <div class="userName">{{dailyList.userName}}</div>
               </div>
-              <i class="ico iconfont icon-dianzan"><span>999</span></i>
+              <i class="ico iconfont icon-dianzan"><span>{{dailyList.recipePraiseNum}}</span></i>
             </div>
           </div>
         </div>
@@ -41,7 +43,7 @@
     <div class="randomBackUrl w-all img"  :style="{'background-image':'url('+randomBackUrl+')'}">
       <div class="ranTit text-center color-w">总有一款适合你</div>
       <div class="ranCtn text-center color-w">还拿不定主意？来看看今日的菜谱推荐吧</div>
-      <div class="icoLoad">
+      <div class="icoLoad" @click="randomRecipe">
         <i class="iconfont icon-load color-w"></i>
       </div>
       <div class="ranLists flex flex-btw">
@@ -58,12 +60,14 @@
         <div class="activityLists">
           <div class="activityTit h-five color-w">近期活动</div>
           <div class="flex flex-btw">
-            <div class="activityList" v-for="activity in 4">
-              <div class="activityBackUrl">
-                <img src="https://cp1.douguo.com/upload/caiku/5/2/e/600x400_5262a1e2e6a5432890ebe7d90e77b42e.jpg" alt="">
-              </div>
-              <div class="activityName">活动名称</div>
-              <div class="activityCtn">活动状态</div>
+            <div class="activityList" v-for="activity in activitys">
+              <router-link :to="'/activityDetail/'+activity.activityId">
+                <div class="activityBackUrl">
+                  <img :src="activity.activityImg" alt="">
+                </div>
+              </router-link>
+              <div class="activityName">{{activity.activityName}}</div>
+              <div class="activityCtn">{{activity.activityState}}</div>
             </div>
           </div>
         </div>
@@ -87,6 +91,9 @@
           return {
             randomBackUrl:"../../../static/homeImg/article.jpg",
             showImg:false,
+            severRecipe: [],
+            activitys:[],
+            threeArticle:[]
           }
       },
       components:{
@@ -95,6 +102,16 @@
       },
       mounted(){
           window.addEventListener('scroll',this.handleScroll)
+          this.$ajax.get('/api/recipe/homeRecipe').then(res => {
+            this.severRecipe = res.data.data
+          })
+          this.$ajax.get('/api/activity').then(res => {
+            this.activitys = res.data.data;
+          })
+          this.$ajax.get('/api/article/threeArticle').then(res => {
+              console.log(res.data.data)
+            this.threeArticle = res.data.data;
+          })
       },
       methods:{
         handleScroll(){
@@ -105,9 +122,13 @@
             this.showImg = false;
           }
         },
-          toTop(){
+        toTop(){
             window.pageYOffset = document.documentElement.scrollTop=document.body.scrollTop = 0;
-          }
+          },
+        randomRecipe(){
+          let count = Math.ceil(Math.random()*10)
+          console.log(count)
+        }
       },
       destroyed(){
           window.removeEventListener('scroll',this.handleScroll)
@@ -117,8 +138,8 @@
 
 <style rel="stylesheet/scss" lang="scss" scoped>
     .content{
-    position: relative;
-    z-index:-10;
+    /*position: relative;*/
+    /*<!--z-index:-10;-->*/
     padding:0 0 40px 0;
   }
   .sw{

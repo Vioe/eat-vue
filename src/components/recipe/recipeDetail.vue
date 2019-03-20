@@ -3,11 +3,11 @@
     <div class="recipeDetail flex">
       <!--左边菜谱的步骤列表-->
       <div class="left">
-        <div><img src="../../../static/homeImg/article.jpg" class="img" alt=""></div>
-        <h2 class="recipeName">酸辣汤面#急速早餐#</h2>
+        <div><img :src="recipe.recipeCoverImg" class="img" alt=""></div>
+        <h2 class="recipeName">{{recipe.recipeName}}</h2>
         <div class="flex flex-h-cen flex-btw">
           <div class="num-l flex">
-            <div><i class="iconfont icon-shoucang"></i>点赞115人</div>
+            <div><i class="iconfont icon-shoucang"></i>点赞{{recipe.recipePraiseNum}}人</div>
             <div style="margin-left: 10px;"><i class="iconfont icon-edit"></i>留言0条</div>
           </div>
           <div class="num-r flex">
@@ -18,11 +18,11 @@
         <!--作者信息-->
         <div class="userInfo">
           <div class="u-top flex flex-h-cen">
-            <div class="u-pic"><img src="../../../static/headPic/userHead.jpg" alt=""></div>
+            <div class="u-pic"><img :src="recipe.headPhoto" alt=""></div>
             <div class="u-name">用户昵称</div>
             <div class="u-att text-center color-w">+关注</div>
           </div>
-          <div class="u-bot">用户菜谱简介这是一个四川的酸辣汤，好吃不腻，快来吃啊</div>
+          <div class="u-bot">{{recipe.recipeBrief}}</div>
         </div>
         <!--调味料-->
           <ul class="foodList">
@@ -30,18 +30,18 @@
               <div class="foodName tit">食材名</div>
               <div class="foodNum tit">计量</div>
             </li>
-            <li class="flex flex-h-cen food-r" v-for="list in foodList">
-              <div class="foodName">{{list.name}}</div>
-              <div class="foodNum">{{list.num}}</div>
+            <li class="flex flex-h-cen food-r" v-for="list in recipeFood">
+              <div class="foodName">{{list.foodName}}</div>
+              <div class="foodNum">{{list.foodNum}}</div>
             </li>
           </ul>
         <!--步骤图文介绍-->
         <div class="stepList">
-          <div class="step flex" v-for="(step,index) in 4">
-            <div class="stepL"><img src="../../../static/headPic/userHead.jpg" class="img" alt=""></div>
+          <div class="step flex" v-for="(step,index) in recipeStep">
+            <div class="stepL"><img :src="step.recipeStepImg" class="img" alt=""></div>
             <div class="stepR">
               <div class="stepNum">第{{index+1}}步</div>
-              <div class="stepCtn">如何操作</div>
+              <div class="stepCtn">{{step.recipeStepBrief}}</div>
             </div>
           </div>
         </div>
@@ -49,13 +49,13 @@
         <recipe-comment></recipe-comment>
       </div>
       <!--右边热门菜谱-->
-      <div class="right">
+      <div class="right flex-f1">
         <div class="hotRecipe">热门菜谱</div>
-        <div class="recipeList flex" v-for="item in 4">
-          <div class="recipePic"><img src="../../../static/homeImg/article.jpg" class="img" alt=""></div>
-          <div class="recipeTxt">
-            <h3 class="recipeTit">菜谱名</h3>
-            <div class="recipeCtn">这是一个非常好吃的菜，点赞率超过一百万</div>
+        <div class="recipeList flex" v-for="item in hotRecipe">
+          <div class="recipePic"><img :src="item.recipeCoverImg" class="img" alt=""></div>
+          <div class="recipeTxt flex-f1">
+            <h3 class="recipeTit">{{item.recipeName}}</h3>
+            <div class="recipeCtn line-clamp3">{{item.recipeBrief}}</div>
           </div>
         </div>
       </div>
@@ -69,12 +69,12 @@
         name: "recipeDetail",
       data(){
           return {
-            foodList:[
-              {name: '油',num: '10g'},
-              {name: '醋',num: '10g'},
-              {name: '盐',num: '10g'},
-              {name: '米粉',num: '10g'}
-            ]
+            detailId: '',
+            allDate: {},
+            recipe: {},
+            recipeFood: [],
+            recipeStep: [],
+            hotRecipe:[]
           }
       },
       components:{
@@ -82,6 +82,20 @@
       },
       methods:{
 
+      },
+      mounted(){
+          this.detailId = this.$route.params.detailsId;
+          this.$ajax.get(`/api/recipe/recipeDetail/${this.detailId}`).then(res => {
+            console.log(res.data.data)
+            this.allDate = res.data.data;
+            this.recipe = this.allDate.recipe[0];
+            this.recipeFood = this.allDate.recipeFood;
+            this.recipeStep = this.allDate.recipeStep;
+          })
+          this.$ajax.get('/api/recipe/hotRecipe').then(res => {
+            console.log(res.data.data)
+            this.hotRecipe = res.data.data;
+          })
       }
     }
 </script>
@@ -155,6 +169,7 @@
           height: 250px;
         }
         .stepR{
+          flex:1;
           padding:0 40px;
           .stepNum{
             font-size: 20px;
