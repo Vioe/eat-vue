@@ -117,16 +117,15 @@
                   <!-- 图片上传 -->
                   <div class="leftPhoto">
                     <label :for="`step${key}`">
-                      <img class="brower" src="" alt="">
-                      <div class="stepPic flex flex-cen">
+                      <img :class="`brower${key}`" v-if="obj.stepPhoto" class="stepPic" src="" alt="">
+                      <div class="stepPic flex flex-cen" v-else>
                         <i class="icon iconfont icon-jia3"></i>
                       </div>
-                      <!--<img src="../../../static/headPic/userHead.jpg" width="250px" alt="" style="margin-left: 12%">-->
                     </label>
                     <input type="file"
                            :id="`step${key}`"
                            :ref="`step${key}`"
-                           @change="showBasicPh('step'+key,key)"
+                           @change="showBasicPh1($event,'step'+key,key)"
                            accept="image/jpeg,image/jpg,image/png"
                            style="display: none">
                   </div>
@@ -189,6 +188,7 @@
           return {
             form: {
               dieltSyon: '',
+              bigPic:'',
               // 烹饪时间 + 份量 + 食材[]
               dieltTime: '',
               dieltWeight: '',
@@ -236,6 +236,8 @@
         //获取上传的大图
         showBasicPh(e){
           var file=e.target.files[0];
+          this.form.bigPic = file;
+          console.log(this.form.bigPic)
           var reader=new FileReader();
           reader.onload=function(event){
             console.log(event.target.result)
@@ -243,6 +245,19 @@
           }
           reader.readAsDataURL(file);
           this.showUp = false;
+        },
+        // 上传步骤图
+        showBasicPh1(e,step,key){
+          console.log(e.target.files[0])
+          var file=e.target.files[0];
+          var reader=new FileReader();
+          reader.onload=function(event){
+            console.log(event.target.result)
+            document.querySelector(`.brower${key}`).src=event.target.result;
+          }
+          reader.readAsDataURL(file);
+          this.form.steplist[key].stepPhoto = e.target.files[0]
+          console.log(this.form.steplist)
         },
         // 删除
         delFoodList(formArray, key) {
@@ -278,6 +293,26 @@
             type: 'success'
           });
         },
+        uploadBtn(){
+          var zipFormData = new FormData();
+          // let stepList = [];
+          // stepList.push({
+          //   stepPHName: '',
+          //   stepPhoto: this.form.bigPic,
+          //   stepContent: ''
+          // })
+          // for(let i=0;i< this.form.steplist.length;i++){
+          //   stepList.push(this.form.steplist[i])
+          // }
+          console.log(this.form.steplist)
+          for(let i = 0 ; i< this.form.steplist.length ; i++){
+            zipFormData.append('filename', this.form.steplist[i].stepPhoto);
+          }
+          // zipFormData.append('files',this.form.steplist)
+          this.$ajax.post('/api/recipe/addRecipe',zipFormData).then( res => {
+            console.log(res)
+          })
+        }
       }
     }
 </script>
