@@ -19,7 +19,7 @@
         <div class="userInfo">
           <div class="u-top flex flex-h-cen">
             <div class="u-pic"><img :src="recipe.headPhoto" alt=""></div>
-            <div class="u-name">用户昵称</div>
+            <div class="u-name">{{recipe.userName}}</div>
             <div class="u-att text-center color-w">+关注</div>
           </div>
           <div class="u-bot">{{recipe.recipeBrief}}</div>

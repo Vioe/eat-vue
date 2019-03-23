@@ -68,16 +68,25 @@
       }
     },
     mounted(){
+      console.log("切换年份："+this.$route.params.year)
       let _this = this;
-      this.$ajax('/api/article').then(res => {
+      this.$ajax.get('/api/article').then(res => {
         console.log(res.data.data.dateTime)
         this.all = res.data.data
         this.dateTime = res.data.data.dateTime;
       })
       if(this.$route.params.year!=undefined){
-
+          let year = this.$route.params.year
+          let month = this.$route.params.month
+          this.$ajax.get(`/api/article/${year}/${month}`).then(res => {
+            console.log("月份菜单")
+            console.log(res.data.data)
+            _this.myActData = res.data.data;
+            _this.pageCount=_this.myActData.length;
+            _this.loadData();
+          })
       }else{
-        this.$ajax('/api/article').then( res =>{
+        this.$ajax.get('/api/article').then( res =>{
           console.log(res.data.data)
           _this.myActData = res.data.data.allDate;
           _this.pageCount=_this.myActData.length;

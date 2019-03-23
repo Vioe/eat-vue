@@ -258,6 +258,7 @@
           reader.readAsDataURL(file);
           this.form.steplist[key].stepPhoto = e.target.files[0]
           console.log(this.form.steplist)
+          e.target.value = '';
         },
         // 删除
         delFoodList(formArray, key) {

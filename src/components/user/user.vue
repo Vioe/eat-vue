@@ -5,9 +5,9 @@
         <img src="../../../static/homeImg/recipeBackUrl.jpg"  alt="">
         <div class="back2">
           <div class="userHead">
-            <img src="../../../static/headPic/userHead.jpg" class="img" alt="">
+            <img :src="userInfo.headPhoto" class="img" alt="">
           </div>
-          <div class="text-center userName">余哎呀 <router-link to="/reviseInfo"><i class="iconfont icon-edit"></i></router-link></div>
+          <div class="text-center userName">{{userInfo.userName}} <router-link to="/reviseInfo"><i class="iconfont icon-edit"></i></router-link></div>
         </div>
       </div>
       <el-tabs type="border-card">
@@ -38,7 +38,8 @@
       name: "user",
       data(){
           return {
-            radio: '1'
+            radio: '1',
+            userInfo:{}
           }
       },
       components:{
@@ -46,6 +47,14 @@
         userAttention,
         userJoinActivity,
         userRecipe
+      },
+      mounted(){
+        console.log(this.$store.state.userId)
+        this.$ajax.get(`/api/users/getUser/${this.$store.state.userId}`).then(res => {
+          // console.log(res.data.data[0])
+          this.userInfo = res.data.data[0];
+          this.userInfo.headPhoto = 'http://localhost:3000/headImg/'+this.userInfo.headPhoto
+        })
       }
     }
 </script>

@@ -32,7 +32,10 @@ export default new Router({
     //逛菜谱
     {path: '/recipe', name: 'recipe', component: Recipe},
     //食享社区
-    {path: '/article1', name: 'articleRec', component: ArticleRec},
+    {path: '/article1', name: 'articleRec', component: ArticleRec,children:[
+        // {path: "", component: ArticleRec},
+        {path:':year/:month',component:ArticleRec}
+      ]},
     //达人区
     {path: '/district', name: 'district', component: DaRenDistrict},
     //活动

@@ -1,13 +1,15 @@
 <template>
     <div class="userRecipe">
       <div class="inner">
-        <div class="myRecipe" v-for="item in 7">
-          <div class="recipe-Pic">
-            <img src="../../../static/homeImg/daily.jpg" alt="">
-          </div>
+        <div class="myRecipe" v-for="item in myRecipe">
+          <router-link :to="'/recipeDetail/'+item.detailsId">
+            <div class="recipe-Pic">
+              <img :src="item.recipeCoverImg" alt="">
+            </div>
+          </router-link>
           <div class="recipe-txt flex flex-btw">
-            <div>菜谱名</div>
-            <div><i class="iconfont icon-shanchu"></i></div>
+            <div>{{item.recipeName}}</div>
+            <div @click="delRecipe(item.detailsId)"><i class="iconfont icon-shanchu"></i></div>
           </div>
         </div>
       </div>
@@ -17,7 +19,46 @@
 
 <script>
     export default {
-        name: "userRecipe"
+        name: "userRecipe",
+        data(){
+            return {
+              myRecipe:[]
+            }
+        },
+        mounted(){
+          console.log("我的菜谱")
+            this.$ajax.get(`/api/getMyRecipe/${this.$store.state.userId}`).then( res => {
+              // console.log(res.data.data)
+              this.myRecipe = res.data.data;
+            })
+        },
+        methods:{
+          delRecipe(detailId){
+            console.log(detailId)
+            console.log(this.$store.state.userId)
+            this.$confirm('是否删除该菜谱？', '提示', {
+              confirmButtonText: '确定',
+              cancelButtonText: '取消',
+              type: 'warning'
+            }).then(() => {
+              this.$ajax.get(`/api/recipe/delRecipe/${this.$store.state.userId}/${detailId}`).then(res => {
+                this.$ajax.get(`/api/getMyRecipe/${this.$store.state.userId}`).then( res => {
+                  // console.log(res.data.data)
+                  this.myRecipe = res.data.data;
+                  this.$message({
+                    type: 'success',
+                    message: '删除成功!'
+                  });
+                })
+              })
+            }).catch(() => {
+              this.$message({
+                type: 'info',
+                message: '已取消删除'
+              });
+            });
+          }
+        }
     }
 </script>
 
