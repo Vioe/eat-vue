@@ -10,21 +10,16 @@
           <div class="articleRight flex-f1">
             <p class="articleTit">{{item.articleTitle}}</p>
             <p class="articleCtn line-clamp4">{{item.articleContent}}</p>
+            <p class="articleTime1" style="margin-top: 15px; text-align: right; color:#999999;"><i class="iconfont icon-shijian"></i>{{item.articleTime}}</p>
           </div>
         </div>
       </div>
       <!--文章日期-->
       <div class="articleTime">
-        <div class="allTime text-center color-w">全部</div>
-        <!--<ul class="timeList">-->
-          <!--<li>2019</li>-->
-          <!--<li>2018</li>-->
-          <!--<li>2017</li>-->
-          <!--<li>2016</li>-->
-        <!--</ul>-->
+        <router-link to="/article1"><div class="allTime text-center color-w">全部</div></router-link>
         <el-collapse v-model="activeName" accordion>
           <el-collapse-item v-for="(year,index) in dateTime" :key="index" :title="String(year.year)" :name="index+1">
-            <div class="month" v-for="month in year.month">{{month}}月</div>
+           <div class="month" v-for="month in year.month"><router-link :to="'/article1/'+year.year+'/'+month">{{month}}月</router-link></div>
           </el-collapse-item>
         </el-collapse>
       </div>
@@ -67,33 +62,12 @@
         return this.articles
       }
     },
-    mounted(){
+    watch:{
+      "$route": "mounted"
+    },
+    created(){
       console.log("切换年份："+this.$route.params.year)
-      let _this = this;
-      this.$ajax.get('/api/article').then(res => {
-        console.log(res.data.data.dateTime)
-        this.all = res.data.data
-        this.dateTime = res.data.data.dateTime;
-      })
-      if(this.$route.params.year!=undefined){
-          let year = this.$route.params.year
-          let month = this.$route.params.month
-          this.$ajax.get(`/api/article/${year}/${month}`).then(res => {
-            console.log("月份菜单")
-            console.log(res.data.data)
-            _this.myActData = res.data.data;
-            _this.pageCount=_this.myActData.length;
-            _this.loadData();
-          })
-      }else{
-        this.$ajax.get('/api/article').then( res =>{
-          console.log(res.data.data)
-          _this.myActData = res.data.data.allDate;
-          _this.pageCount=_this.myActData.length;
-          console.log("结果"+_this.pageCount)
-          _this.loadData();
-        })
-      }
+      this.mounted();
     },
     methods:{
       change(){
@@ -111,6 +85,33 @@
         }
         console.log(this.articles)
       },
+      mounted(){
+        let _this = this;
+        this.$ajax.get('/api/article').then(res => {
+          console.log(res.data.data.dateTime)
+          this.all = res.data.data
+          this.dateTime = res.data.data.dateTime;
+        })
+        if(this.$route.params.year!=undefined){
+          let year = this.$route.params.year
+          let month = this.$route.params.month
+          this.$ajax.get(`/api/article/${year}/${month}`).then(res => {
+            console.log("月份菜单")
+            console.log(res.data.data)
+            _this.myActData = res.data.data;
+            _this.pageCount=_this.myActData.length;
+            _this.loadData();
+          })
+        }else{
+          this.$ajax.get('/api/article').then( res =>{
+            console.log(res.data.data)
+            _this.myActData = res.data.data.allDate;
+            _this.pageCount=_this.myActData.length;
+            console.log("结果"+_this.pageCount)
+            _this.loadData();
+          })
+        }
+      }
     }
   }
 </script>
@@ -138,7 +139,11 @@
             font-weight: bold;
             padding: 0 0 12px 0;
           }
-
+          .articleTime1{
+            i{
+              margin-right: 6px;
+            }
+          }
         }
       }
     }

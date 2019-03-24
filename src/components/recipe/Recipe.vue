@@ -10,17 +10,17 @@
         <div class="right">
           <div class="rightTit color-w">精选作者推荐</div>
           <div class="userList">
-            <div class="recipeUser flex flex-h-cen" v-for="(item,index) in 4" >
+            <div class="recipeUser flex flex-h-cen" v-for="(item,index) in fourUser" >
               <div class="userLeft flex flex-h-cen">
                 <div class="ico flex flex-cen">
                   <!--<i class="iconfont icon-shuiguo"></i>-->
                   <div>{{index+1}}</div>
                 </div>
-                <div class="userHeadPic"><img src="https://i1.douguo.com/upload/photo/5/e/d/70_u19730136739726144900.jpg" alt=""></div>
+                <div class="userHeadPic"><img :src="item.headPhoto" alt=""></div>
               </div>
               <div class="userRight">
-                <p class="txt1">用户名</p>
-                <p>被关注的数量</p>
+                <p class="txt1">{{item.userName}}</p>
+                <p><i class="iconfont icon-xihuan1"></i>{{item.recipePraiseNum}}</p>
               </div>
             </div>
           </div>
@@ -33,8 +33,20 @@
   import recipeList from './recipeList'
     export default {
         name: "Recipe",
+      data(){
+          return {
+            fourUser: []
+          }
+      },
       components:{
           'recipe-waterfull': recipeList
+      },
+      mounted(){
+        this.$ajax.get('/api/recipe/getFourUser').then(res => {
+          console.log("我是精选作者")
+          console.log(res.data.data)
+          this.fourUser = res.data.data;
+        })
       }
     }
 </script>
