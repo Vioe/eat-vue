@@ -46,7 +46,25 @@
           </div>
         </div>
         <!--菜谱评论-->
-        <recipe-comment></recipe-comment>
+        <recipe-comment @all-comment="getCom"></recipe-comment>
+        <!--全部评论-->
+        <div class="cm">
+          <h3 class="commentT">全部评论</h3>
+          <div class="allComment" v-for="(item,i) in comment" v-if="i<n">
+            <div class="user flex flex-h-cen">
+              <div class="userHead"><img class="img" :src="item.headPhoto" alt=""></div>
+              <div class="userName flex flex-f1 flex-btw">
+                <div>{{item.userName}}</div>
+                <div class="pointer" style="color:red;cursor: pointer;" v-if="item.userId == userId" @click="delComment(item.commentId)">删除</div>
+              </div>
+            </div>
+            <div class="commentC" v-html="item.commentContent"></div>
+          </div>
+          <div v-if="comment.length==0" class="text-center " >暂无评论~</div>
+          <div v-else-if="comment.length<=n"></div>
+          <div @click="onload" v-else-if="show" class="pointer aa flex flex-cen" ><i class="iconfont icon-zhongxinjiazai"></i>加载更多</div>
+          <div @click="hidden" v-if="unshow" class="pointer aa flex flex-cen" ><i class="iconfont icon-ziyuanldpi"></i>收起</div>
+        </div>
       </div>
       <!--右边热门菜谱-->
       <div class="right flex-f1">
@@ -74,14 +92,47 @@
             recipe: {},
             recipeFood: [],
             recipeStep: [],
-            hotRecipe:[]
+            hotRecipe:[],
+            comment:[],
+            userId: localStorage.getItem('userId'),
+            n:3,
+            show:true,
+            unshow:false,
           }
       },
       components:{
         recipeComment
       },
       methods:{
-
+        delComment(commentId){
+          console.log(commentId)
+          this.$ajax.get(`/api/recipe/delComment/${commentId}`).then( res => {
+            this.$ajax.get(`/api/recipe/comment/${this.detailId}`).then(res => {
+              this.comment = res.data.data;
+            })
+          })
+        },
+        getCom(data){
+          this.comment = data;
+        },
+        onload(){
+          if(this.n<this.comment.length){
+            if(this.n+3>=this.comment.length){
+              this.n+=3;
+              this.show=false;
+              this.unshow=true;
+            }else{
+              this.n+=3;
+            }
+          }else{
+            this.show=false
+          }
+        },
+        hidden(){
+          this.n=3;
+          this.show=true;
+          this.unshow=false;
+        },
       },
       mounted(){
           this.detailId = this.$route.params.detailsId;
@@ -96,12 +147,23 @@
             console.log(res.data.data)
             this.hotRecipe = res.data.data;
           })
+          this.$ajax.get(`/api/recipe/comment/${this.detailId}`).then(res => {
+            this.comment = res.data.data;
+          })
       }
     }
 </script>
 
 <style scoped lang="scss">
 .recipeDetail{
+  .aa{
+    i{
+      margin-right: 3px;
+    }
+  }
+  .pointer{
+    cursor: pointer;
+  }
   .left{
     padding: 10px;
     width: 700px;
@@ -201,6 +263,27 @@
         .recipeTit{
           padding-bottom: 10px;
         }
+      }
+    }
+  }
+  .cm{
+    padding: 0 20px;
+    margin-top: 20px;
+    .allComment{
+      padding: 10px 0;
+      .user{
+        .userHead{
+          width: 60px;
+          height: 60px;
+          border-radius: 50%;
+          overflow: hidden;
+        }
+        .userName{
+          padding-left: 10px;
+        }
+      }
+      .commentC{
+        padding-left: 70px;
       }
     }
   }

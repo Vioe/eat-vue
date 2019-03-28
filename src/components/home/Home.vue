@@ -10,8 +10,12 @@
         <div class="hotArticle">
           <div class="articleTit">热门文章</div>
           <div class="articleList flex" v-for="item in threeArticle">
-            <div class="articleLeft"><img class="img" :src="item.articlePic" alt=""></div>
-            <div class="articleRight flex-f1 line-clamp3 ">{{item.articleContent}}</div>
+            <div class="articleLeft"><img :src="item.articlePic" alt=""></div>
+            <div class="articleRight flex-f1">
+             <router-link :to="'/articleDetail/'+item.articleId"><h3 style="padding-bottom: 6px;">{{item.articleTitle}}</h3></router-link>
+              <div class="line-clamp3">{{item.articleContent}}</div>
+              <div class="icon"><i class="iconfont icon-dianzan"></i>{{item.articlePraiseNum}}</div>
+            </div>
           </div>
         </div>
       </div>
@@ -40,19 +44,21 @@
         </div>
       </div>
     </div>
-    <div class="randomBackUrl w-all img"  :style="{'background-image':'url('+randomBackUrl+')'}">
+    <div class="randomBackUrl w-all img" :style="{'background-image':'url('+randomBackUrl+')'}">
       <div class="ranTit text-center color-w">总有一款适合你</div>
       <div class="ranCtn text-center color-w">还拿不定主意？来看看今日的菜谱推荐吧</div>
       <div class="icoLoad" @click="randomRecipe">
         <i class="iconfont icon-load color-w"></i>
       </div>
       <div class="ranLists flex flex-btw">
-        <div class="ranList" v-for="ranList in 4">
-          <div class="ranPic">
-            <img src="https://cp1.douguo.com/upload/caiku/9/9/e/600x400_99d0489f647f19fb47be7bdf6a84827e.jpg" alt="">
+        <div class="ranList" v-for="ranList in random">
+          <router-link :to="'/recipeDetail/'+ranList.detailsId">
+            <div class="ranPic">
+            <img :src="ranList.recipeCoverImg" alt="">
           </div>
-          <div class="reName">菜谱名</div>
-          <div class="reCtn">菜谱简介</div>
+          </router-link>
+          <div class="reName">{{ranList.recipeName}}</div>
+          <div class="line-clamp1 reBrif">{{ranList.recipeBrief}}</div>
         </div>
       </div>
       <!--近期活动-->
@@ -67,7 +73,7 @@
                 </div>
               </router-link>
               <div class="activityName">{{activity.activityName}}</div>
-              <div class="activityCtn">{{activity.activityState}}</div>
+              <div class="activityCtn" style="text-align: right;">{{activity.activityState}}</div>
             </div>
           </div>
         </div>
@@ -85,6 +91,7 @@
 <script>
   import homeSwiper from "./homeSwiper"
   import appFooter from "../Footer"
+  import { Loading } from 'element-ui'
     export default {
         name: "home",
       data(){
@@ -93,7 +100,9 @@
             showImg:false,
             severRecipe: [],
             activitys:[],
-            threeArticle:[]
+            threeArticle:[],
+            random:[],
+            allRecipe:[]
           }
       },
       components:{
@@ -101,17 +110,31 @@
         "my-footer":appFooter
       },
       mounted(){
+        let  loading = Loading.service({
+          lock: true,
+          text: '加载中......',
+          background: 'rgba(0, 0, 0, 0.7)'
+        })
           window.addEventListener('scroll',this.handleScroll)
           this.$ajax.get('/api/recipe/homeRecipe').then(res => {
             this.severRecipe = res.data.data
           })
           this.$ajax.get('/api/activity').then(res => {
             this.activitys = res.data.data;
+            console.log("近期文章")
+            console.log(this.activitys)
           })
           this.$ajax.get('/api/article/threeArticle').then(res => {
-              console.log(res.data.data)
             this.threeArticle = res.data.data;
           })
+          this.$ajax.get('/api/recipe').then( res => {
+            this.allRecipe = res.data.data;
+            let page = parseInt(this.allRecipe.length/4)
+            let count = Math.floor(Math.random()*page)
+            this.random = this.allRecipe.slice(count*4,count*4+4)
+            console.log(this.random)
+          })
+        loading.close()
       },
       methods:{
         handleScroll(){
@@ -126,8 +149,10 @@
             window.pageYOffset = document.documentElement.scrollTop=document.body.scrollTop = 0;
           },
         randomRecipe(){
-          let count = Math.ceil(Math.random()*10)
-          console.log(count)
+          let page = parseInt(this.allRecipe.length/4)
+          let count = Math.floor(Math.random()*page)
+          this.random = this.allRecipe.slice(count*4,count*4+4)
+          console.log(this.random)
         }
       },
       destroyed(){
@@ -162,15 +187,23 @@
     .articleList{
       background-color: #FFFFFF;
       border-bottom: 1px solid #ccc;
+      border-right: 1px solid #ccc;
+      border-left: 1px solid #ccc;
       padding: 10px 15px;
       .articleLeft{
         width: 150px;
         height: 100px;
         margin-right: 20px;
+        overflow: hidden;
       }
       .articleRight{
-        height: 50px;
-        overflow: hidden;
+        .icon{
+          padding-top: 10px;
+          float:right;
+          i{
+            margin-right: 10px;
+          }
+        }
       }
     }
   }
@@ -205,6 +238,7 @@
         .ico{
           color:#ccc;
           font-size: 12px;
+          float: right;
         }
       }
     }
@@ -239,9 +273,18 @@
       margin:40px auto;
       .ranList{
         width: 230px;
+        height: 210px;
         background-color: #FFFFFF;
+        .ranPic{
+          height: 150px;
+          overflow: hidden;
+        }
         .reName{
           padding: 8px 17px 8px 17px;
+          font-weight: bold;
+        }
+        .reBrif{
+          padding: 0 17px;
         }
         .reCtn{
           padding: 0 17px 8px 17px;
@@ -254,6 +297,7 @@
       height:290px;
       position: relative;
       top:40px;
+      height: 300px;
       .activityLists{
         padding:10px 0 0 0;
         width: 1000px;

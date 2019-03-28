@@ -36,7 +36,8 @@
       }
     },
     created(){
-      console.log(this.$route.params.cardId)
+      console.log("我是评论")
+      console.log(this.userId)
       for(var i=1;i<=84;i++) {
         this.eoimImg += `<img src="/static/eoim/${i}.png" class="eoimPic" width="20px" height="20px" style="margin-left: 4px; margin-right:4px; margin-top: 2px;">`;
       }
@@ -58,34 +59,23 @@
           if(text!="") {
             $("#input_conta").html("");  //清除发布框的文本内容
             $("div#face").hide();      //隐藏表情选择// 上传图片并发送给后台
-            // $.ajax({
-            //   url: `${axios.defaults.baseURL}/postcards/addcomment`,
-            //   type: "post",
-            //   data: {
-            //     'commentUserId':this.userId,
-            //     'commentCardId':this.$route.params.cardId,
-            //     'commentContent':text,
-            //   },
-            //   success: function (data){
-            //     console.info(data);
-            //   }
-            // });
-            this.$ajax({
-              method: "post",
-              url: `${axios.defaults.baseURL}/postcards/addcomment`,
-              data: {
-                'commentUserId': this.userId,
-                'commentCardId': this.$route.params.cardId,
-                'commentContent': text,
+
+            let param={
+                  'commentUserId': this.userId,
+                  'commentDetailsId': this.$route.params.detailsId,
+                  'commentContent': text,
+                }
+            this.$ajax.post('/api/recipe/addComment',param).then(res => {
+              console.log(res.data.code)
+              if(res.data.code == 200){
+                this.$ajax.get(`/api/recipe/comment/${this.$route.params.detailsId}`).then(res => {
+                  console.log(res)
+                  let comment = res.data.data;
+                  console.log("更新评论")
+                  console.log(comment)
+                  this.$emit('all-comment', comment)
+                })
               }
-            }).then((res) => {
-              this.$ajax({
-                method: 'get',
-                url: `${axios.defaults.baseURL}/postcards/` + this.$route.params.cardId
-              }).then((res) => {
-                console.log("id:" + res.data.data.cardComment[0].commentUserId)
-                this.$emit('all-comment', res.data.data.cardComment)
-              })
             })
           }else{
             alert("内容不能为空！")

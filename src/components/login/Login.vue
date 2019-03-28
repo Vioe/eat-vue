@@ -39,7 +39,7 @@
           let _this=this;
           if(_this.userName != "" && _this.userPwd !=""){
             this.$ajax.post('/api/login',{username:_this.userName,userpassword: _this.userPwd}).then(res => {
-              console.log(res.data.data.num)
+              console.log(res.data.data)
               if(res.data.data.num == 1){
                 alert("用户名不存在！")
                 this.userName ="";
@@ -51,7 +51,6 @@
                 alert("登入成功!")
                 localStorage.setItem("userId", res.data.data.userId)
                 location.href = "/"
-                // this.$router.replace({path:"/"})
               }else{
                 alert("服务器错误！")
               }

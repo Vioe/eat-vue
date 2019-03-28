@@ -19,7 +19,7 @@
               <div class="icon" v-else>
                 <el-dropdown :hide-on-click="false">
                     <span class="el-dropdown-link flex flex-h-cen">
-                      <i class="iconfont people icon-gerenzhongxin1"></i>余哎呀
+                      <i class="iconfont people icon-gerenzhongxin1"></i>{{userName}}
                     </span>
                     <el-dropdown-menu slot="dropdown">
                       <router-link to="/personalCenter"><el-dropdown-item>个人中心</el-dropdown-item></router-link>
@@ -45,13 +45,24 @@
              {"name":"达人区","top":"/addRecipe"}
            ],
            num:0,
-           login: null
+           login: null,
+           userName:""
          }
       },
       computed: mapGetters([
         "isLogin",
         "userId"
       ]),
+      mounted(){
+        if(!this.isLogin){
+          this.$ajax.get(`/api/users/getUser/${this.userId}`).then(res => {
+            console.log("我是用户名")
+            console.log(res.data.data)
+            this.userName = res.data.data[0].userName
+            console.log(this.userName)
+          })
+        }
+      },
       methods: {
         setOut(){
           localStorage.removeItem("userId");

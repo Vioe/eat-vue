@@ -48,7 +48,7 @@
 <style scoped>
 .hh{
   width: 700px;
-  height:400px;
+  height:405px;
   text-align: center;
   line-height: 400px;
   background-color: #ccc;

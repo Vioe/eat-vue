@@ -8,7 +8,7 @@
             <img :src="item.articleCoverImg" alt="">
           </div>
           <div class="articleRight flex-f1">
-            <p class="articleTit">{{item.articleTitle}}</p>
+           <router-link :to="'/articleDetail/'+item.articleId"><p class="articleTit">{{item.articleTitle}}</p></router-link>
             <p class="articleCtn line-clamp4">{{item.articleContent}}</p>
             <p class="articleTime1" style="margin-top: 15px; text-align: right; color:#999999;"><i class="iconfont icon-shijian"></i>{{item.articleTime}}</p>
           </div>
@@ -43,6 +43,7 @@
 </template>
 
 <script>
+  import { Loading } from 'element-ui'
   export default {
     name: "articleList",
     data(){
@@ -66,8 +67,14 @@
       "$route": "mounted"
     },
     created(){
+      let  loading = Loading.service({
+        lock: true,
+        text: '加载中......',
+        background: 'rgba(0, 0, 0, 0.7)'
+      })
       console.log("切换年份："+this.$route.params.year)
       this.mounted();
+      loading.close()
     },
     methods:{
       change(){
@@ -121,6 +128,10 @@
     padding-left: 20px;
     font-size: 16px;
   }
+  /deep/ .el-pager li.active{
+    color: #c1a174;
+  }
+
   .article{
     margin-bottom: 40px;
     .articleLists{

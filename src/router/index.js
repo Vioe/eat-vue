@@ -7,6 +7,7 @@ import Home from "../components/home/Home"
 import Login from "../components/login/Login"
 import Activity from "../components/activity/Activity"
 import ArticleRec from "../components/article/Article"
+import articleDetail from "../components/article/articleDetail"
 import Register from "../components/register/Register"
 import Recipe from "../components/recipe/Recipe"
 import DaRenDistrict from "../components/district/DaRenDistrict"
@@ -47,6 +48,8 @@ export default new Router({
     //菜谱详情
     {path: '/recipeDetail/:detailsId', name: 'recipeDetail', component: recipeDetail},
     //用户信息修改
-    {path: '/reviseInfo', name: 'reviseInfo', component: reviseInfo}
+    {path: '/reviseInfo', name: 'reviseInfo', component: reviseInfo},
+    //文章详情
+    {path: '/articleDetail/:articleId', name: 'articleDetail', component: articleDetail},
   ]
 })

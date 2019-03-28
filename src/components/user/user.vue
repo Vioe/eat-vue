@@ -14,9 +14,9 @@
         <el-tab-pane label="我的菜谱">
             <user-recipe></user-recipe>
         </el-tab-pane>
-        <el-tab-pane label="我的收藏">
-            <user-collection></user-collection>
-        </el-tab-pane>
+        <!--<el-tab-pane label="我的收藏">-->
+            <!--<user-collection></user-collection>-->
+        <!--</el-tab-pane>-->
         <el-tab-pane label="关注达人">
             <user-attention></user-attention>
         </el-tab-pane>
@@ -60,6 +60,12 @@
 </script>
 
 <style scoped rel="stylesheet/scss" lang="scss">
+  /deep/ .el-tabs--border-card>.el-tabs__header .el-tabs__item:not(.is-disabled):hover{
+    color: #c1a174;
+  }
+  /deep/ .el-tabs--border-card>.el-tabs__header .el-tabs__item.is-active{
+    color: #c1a174;
+  }
   .personalCenter{
     .userInfoBack{
       height: 300px;
