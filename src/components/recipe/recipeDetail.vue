@@ -8,7 +8,7 @@
         <div class="flex flex-h-cen flex-btw">
           <div class="num-l flex">
             <div><i class="iconfont icon-shoucang"></i>点赞{{recipe.recipePraiseNum}}人</div>
-            <div style="margin-left: 10px;"><i class="iconfont icon-edit"></i>留言0条</div>
+            <div style="margin-left: 10px;"><i class="iconfont icon-edit"></i>留言{{comment.length}}条</div>
           </div>
           <div class="num-r flex">
             <div class="bt text-center">收藏</div>
@@ -20,7 +20,7 @@
           <div class="u-top flex flex-h-cen">
             <div class="u-pic"><img :src="recipe.headPhoto" alt=""></div>
             <div class="u-name">{{recipe.userName}}</div>
-            <div class="u-att text-center color-w">+关注</div>
+            <div class="u-att text-center color-w" @click="attentionUser">+关注</div>
           </div>
           <div class="u-bot">{{recipe.recipeBrief}}</div>
         </div>
@@ -72,7 +72,9 @@
         <div class="recipeList flex" v-for="item in hotRecipe">
           <div class="recipePic"><img :src="item.recipeCoverImg" class="img" alt=""></div>
           <div class="recipeTxt flex-f1">
-            <h3 class="recipeTit">{{item.recipeName}}</h3>
+            <router-link :to="'/recipeDetail/'+item.detailsId">
+               <h3 class="recipeTit">{{item.recipeName}}</h3>
+            </router-link>
             <div class="recipeCtn line-clamp3">{{item.recipeBrief}}</div>
           </div>
         </div>
@@ -133,17 +135,31 @@
           this.show=true;
           this.unshow=false;
         },
-      },
-      mounted(){
+        mount(){
           this.detailId = this.$route.params.detailsId;
           this.$ajax.get(`/api/recipe/recipeDetail/${this.detailId}`).then(res => {
             console.log(res.data.data)
             this.allDate = res.data.data;
             this.recipe = this.allDate.recipe[0];
+            console.log("菜谱详情")
+            console.log(this.recipe)
             this.recipeFood = this.allDate.recipeFood;
             this.recipeStep = this.allDate.recipeStep;
           })
+        },
+        attentionUser(){
+          this.$ajax.get(`/api/users/myAttention/${this.recipe.userId}/${this.$store.state.userId}`).then(res => {
+            console.log(res)
+          })
+        }
+      },
+      watch:{
+        "$route": "mount"
+      },
+      mounted(){
+          this.mount()
           this.$ajax.get('/api/recipe/hotRecipe').then(res => {
+            console.log("热门菜谱")
             console.log(res.data.data)
             this.hotRecipe = res.data.data;
           })

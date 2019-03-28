@@ -12,8 +12,18 @@
           <div class="recipeList">
             <div class="recipeT">{{src.recipeName}}</div>
             <ul class="flex ul1">
-              <li class="flex flex-f1 flex-cen recipeL"><i class="iconfont icon-icon--"></i><div>收藏</div></li>
-              <li class="flex flex-f1 flex-cen"><i class="iconfont icon-dianzan"></i><div>点赞 {{src.recipePraiseNum}} </div></li>
+              <li class="flex flex-f1 flex-cen recipeL">
+                <div class="star">
+                  <vue-star animate="heartBeat" color="#F05654">
+                    <i slot="icon"  class="iconfont icon-xihuan1" style="font-size: 17px;" @click="handleClick(src.recipePraiseNum,index)"></i>
+                  </vue-star>
+                </div>
+                <div style="position:relative;left: 60px;">收藏</div>
+              </li>
+              <li class="flex flex-f1 flex-cen">
+                <div><i class="iconfont icon-dianzan"></i></div>
+                <div>{{src.recipePraiseNum}}</div>
+              </li>
             </ul>
           </div>
         </div>
@@ -24,6 +34,7 @@
 
 <script>
   import {Waterfall, WaterfallItem} from 'vue2-waterfall';
+  import VueStar from 'vue-star'
   export default {
     name: 'app',
     data() {
@@ -61,8 +72,14 @@
     },
     components: {
       Waterfall,
-      WaterfallItem
+      WaterfallItem,
+      VueStar
     },
+    methods:{
+      handleClick(){
+
+      }
+    }
 
   }
 </script>
@@ -78,6 +95,10 @@
 
 </style>
 <style rel="stylesheet/scss" lang="scss" >
+  .star{
+    margin-left:-95px;
+    margin-top: -100px;
+  }
   * {
     padding: 0;
     margin: 0;

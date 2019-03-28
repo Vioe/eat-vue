@@ -72,7 +72,6 @@
         text: '加载中......',
         background: 'rgba(0, 0, 0, 0.7)'
       })
-      console.log("切换年份："+this.$route.params.year)
       this.mounted();
       loading.close()
     },
@@ -90,12 +89,10 @@
         for (let i = start; i < end; i++) {
           this.articles.push(this.myActData[i])
         }
-        console.log(this.articles)
       },
       mounted(){
         let _this = this;
         this.$ajax.get('/api/article').then(res => {
-          console.log(res.data.data.dateTime)
           this.all = res.data.data
           this.dateTime = res.data.data.dateTime;
         })
@@ -103,18 +100,14 @@
           let year = this.$route.params.year
           let month = this.$route.params.month
           this.$ajax.get(`/api/article/${year}/${month}`).then(res => {
-            console.log("月份菜单")
-            console.log(res.data.data)
             _this.myActData = res.data.data;
             _this.pageCount=_this.myActData.length;
             _this.loadData();
           })
         }else{
           this.$ajax.get('/api/article').then( res =>{
-            console.log(res.data.data)
             _this.myActData = res.data.data.allDate;
             _this.pageCount=_this.myActData.length;
-            console.log("结果"+_this.pageCount)
             _this.loadData();
           })
         }

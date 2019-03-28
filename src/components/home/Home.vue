@@ -9,12 +9,12 @@
         <!--热门文章列表-->
         <div class="hotArticle">
           <div class="articleTit">热门文章</div>
-          <div class="articleList flex" v-for="item in threeArticle">
+          <div class="articleList flex" v-for="(item,index) in threeArticle">
             <div class="articleLeft"><img :src="item.articlePic" alt=""></div>
             <div class="articleRight flex-f1">
              <router-link :to="'/articleDetail/'+item.articleId"><h3 style="padding-bottom: 6px;">{{item.articleTitle}}</h3></router-link>
               <div class="line-clamp3">{{item.articleContent}}</div>
-              <div class="icon"><i class="iconfont icon-dianzan"></i>{{item.articlePraiseNum}}</div>
+              <div class="icon" ><i @click="addPraiseNum(item.articleId,index)" class="iconfont icon-dianzan"></i>{{item.articlePraiseNum}}</div>
             </div>
           </div>
         </div>
@@ -125,6 +125,8 @@
             console.log(this.activitys)
           })
           this.$ajax.get('/api/article/threeArticle').then(res => {
+            console.log("热门")
+            console.log(res.data.data)
             this.threeArticle = res.data.data;
           })
           this.$ajax.get('/api/recipe').then( res => {
@@ -153,6 +155,13 @@
           let count = Math.floor(Math.random()*page)
           this.random = this.allRecipe.slice(count*4,count*4+4)
           console.log(this.random)
+        },
+        addPraiseNum(articleId,index){
+          console.log(articleId)
+          this.threeArticle[index].articlePraiseNum += 1;
+          this.$ajax.get(`/api/addPriseNum/${articleId}`).then(res => {
+            console.log(res)
+          })
         }
       },
       destroyed(){
