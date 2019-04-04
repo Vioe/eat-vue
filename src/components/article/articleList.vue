@@ -10,7 +10,7 @@
           <div class="articleRight flex-f1">
            <router-link :to="'/articleDetail/'+item.articleId"><p class="articleTit">{{item.articleTitle}}</p></router-link>
             <p class="articleCtn line-clamp4">{{item.articleContent}}</p>
-            <p class="articleTime1" style="margin-top: 15px; text-align: right; color:#999999;"><i class="iconfont icon-shijian"></i>{{item.articleTime}}</p>
+            <p class="articleTime1" style="margin-top: 15px; text-align: right; color:#999999;"><i class="iconfont icon-shijian"></i>{{item.articleTime.substr(0,10)}}</p>
           </div>
         </div>
       </div>

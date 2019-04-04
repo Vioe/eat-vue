@@ -8,7 +8,7 @@
             <el-input v-model="userName" placeholder="请输入用户名"></el-input>
           </el-form-item>
           <el-form-item class="text-center" label="密码">
-            <el-input v-model="userPwd" placeholder="请输入密码"></el-input>
+            <el-input v-model="userPwd" type="password" placeholder="请输入密码" ></el-input>
           </el-form-item>
           <el-row>
             <div class="w-all next text-center" @click="toLogin" >登入</div>

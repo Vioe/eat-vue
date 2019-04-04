@@ -14,7 +14,8 @@
             <div class="articleRight flex-f1">
              <router-link :to="'/articleDetail/'+item.articleId"><h3 style="padding-bottom: 6px;">{{item.articleTitle}}</h3></router-link>
               <div class="line-clamp3">{{item.articleContent}}</div>
-              <div class="icon" ><i @click="addPraiseNum(item.articleId,index)" class="iconfont icon-dianzan"></i>{{item.articlePraiseNum}}</div>
+              <div class="icon" v-if="praise && `att${index}`"><i @click="addPraiseNum(item.articleId,index)" class="iconfont icon-dianzan" ></i>{{item.articlePraiseNum}}</div>
+              <div class="icon" v-else><i @click="subPraiseNum(item.articleId,index)" class="iconfont icon-dianzan" style="color: red;"></i>{{item.articlePraiseNum}}</div>
             </div>
           </div>
         </div>
@@ -102,7 +103,9 @@
             activitys:[],
             threeArticle:[],
             random:[],
-            allRecipe:[]
+            allRecipe:[],
+            praise: true,
+            d: null
           }
       },
       components:{
@@ -161,7 +164,13 @@
           this.threeArticle[index].articlePraiseNum += 1;
           this.$ajax.get(`/api/addPriseNum/${articleId}`).then(res => {
             console.log(res)
+            this.praise = false;
+
           })
+        },
+        subPraiseNum(articleId,index){
+          this.threeArticle[index].articlePraiseNum -= 1;
+          this.praise = true;
         }
       },
       destroyed(){
@@ -210,7 +219,7 @@
           padding-top: 10px;
           float:right;
           i{
-            margin-right: 10px;
+            margin-right: 6px;
           }
         }
       }

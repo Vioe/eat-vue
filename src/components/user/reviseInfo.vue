@@ -58,17 +58,15 @@
             console.log(res)
             _that.formLabelAlign.name = res.data.data[0].userName;
             _that.pwd = res.data.data[0].password;
-            _that.headPic = 'http://localhost:3000/headImg/'+ res.data.data[0].headPhoto;
+            // _that.headPic = 'http://localhost:3000/headImg/'+ res.data.data[0].headPhoto;
+            _that.headPic =  res.data.data[0].headPhoto;
           })
       },
       methods:{
         showBasicPh(e){
           this.headFile = e.target.files[0];
-          // console.log(this.headFile)
-          // console.log(e.target.files)
           let reader=new FileReader();
           reader.onload = function(event){
-            // console.log(event.target.result)
             document.querySelector(".brower").src=event.target.result;
           }
           reader.readAsDataURL(this.headFile);

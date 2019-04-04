@@ -1,5 +1,5 @@
 <template>
-  <div class="content">
+  <div>
     <div class="addRecipe">
       <el-row>
         <el-col :span="8" :push="4">
@@ -178,10 +178,12 @@
         </el-col>
       </el-row>
     </div>
+    <my-footer></my-footer>
   </div>
 </template>
 
 <script>
+    import appFooter from "../Footer"
     export default {
       name: "addRecipe",
       data(){
@@ -220,6 +222,9 @@
               ]
             },
           }
+      },
+      components:{
+        "my-footer":appFooter
       },
       methods:{
         // 检查输入的文字
@@ -296,22 +301,29 @@
         },
         uploadBtn(){
           var zipFormData = new FormData();
-          // let stepList = [];
-          // stepList.push({
-          //   stepPHName: '',
-          //   stepPhoto: this.form.bigPic,
-          //   stepContent: ''
-          // })
-          // for(let i=0;i< this.form.steplist.length;i++){
-          //   stepList.push(this.form.steplist[i])
-          // }
-          console.log(this.form.steplist)
-          for(let i = 0 ; i< this.form.steplist.length ; i++){
-            zipFormData.append('filename', this.form.steplist[i].stepPhoto);
-          }
-          // zipFormData.append('files',this.form.steplist)
-          this.$ajax.post('/api/recipe/addRecipe',zipFormData).then( res => {
-            console.log(res)
+          var zipFormData1 = new FormData();
+          zipFormData.append('filename', this.form.bigPic);
+          zipFormData.append('dieltTitle', this.dieltTitle);
+          zipFormData.append('dieltSyon', this.form.dieltSyon);
+          zipFormData.append('dieltTime', this.form.dieltTime);
+          zipFormData.append('dieltWeight', this.form.dieltWeight);
+          zipFormData.append('userId', this.$store.state.userId);
+          this.$ajax.post('/api/recipe/addBaseRecipe',zipFormData).then(res => {
+            if(res.data.code == 200){
+              for(let i = 0 ; i< this.form.steplist.length ; i++){
+                zipFormData1.append('filename', this.form.steplist[i].stepPhoto);
+              }
+              let stepContent = [];
+              for(let i = 0 ; i< this.form.steplist.length ; i++){
+                stepContent.push(this.form.steplist[i].stepContent);
+              }
+              console.log("步骤介绍"+stepContent)
+              zipFormData1.append('myDate', JSON.stringify(stepContent));
+              zipFormData1.append('myDate1', JSON.stringify(this.form.foodlist));
+              this.$ajax.post('/api/recipe/addRecipe',zipFormData1).then( res => {
+                console.log(res)
+              })
+            }
           })
         }
       }
@@ -330,6 +342,13 @@
   /deep/ .el-form-item__content{
     line-height: normal;
     font-size:0;
+  }
+  .addRecipe{
+    width: 1100px;
+    margin: 0 auto;
+    margin-top:50px;
+    background-color: #ebf6df;
+    padding: 40px 0;
   }
 .stepPic{
   width: 250px;

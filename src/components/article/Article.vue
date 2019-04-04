@@ -1,18 +1,23 @@
 <template>
-  <div class="activity">
-    <div class="w-all">
-      <img src="../../../static/homeImg/recipeBackUrl.jpg"  alt="">
+  <div>
+    <div class="activity">
+      <div class="w-all">
+        <img src="../../../static/homeImg/recipeBackUrl.jpg"  alt="">
+      </div>
+      <article-list></article-list>
     </div>
-    <article-list></article-list>
+    <my-footer></my-footer>
   </div>
 </template>
 
 <script>
+import appFooter from "../Footer"
 import articleList from './articleList'
 export default {
 name: "articleRec",
 components:{
-'article-list': articleList,
+  'article-list': articleList,
+  'my-footer': appFooter
 }
 }
 </script>

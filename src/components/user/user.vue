@@ -1,30 +1,36 @@
 <template>
-  <div class="content">
-    <div class="personalCenter">
-      <div class="userInfoBack w-all">
-        <img src="../../../static/homeImg/recipeBackUrl.jpg"  alt="">
-        <div class="back2">
-          <div class="userHead">
-            <img :src="userInfo.headPhoto" class="img" alt="">
+  <div>
+    <div class="content">
+      <div class="personalCenter">
+        <div class="userInfoBack w-all">
+          <img src="../../../static/homeImg/recipeBackUrl.jpg"  alt="">
+          <div class="back2">
+            <div class="userHead">
+              <img :src="userInfo.headPhoto" class="img" alt="">
+            </div>
+            <div class="text-center userName">{{userInfo.userName}} <router-link to="/reviseInfo"><i class="iconfont icon-edit"></i></router-link></div>
           </div>
-          <div class="text-center userName">{{userInfo.userName}} <router-link to="/reviseInfo"><i class="iconfont icon-edit"></i></router-link></div>
         </div>
-      </div>
-      <el-tabs type="border-card">
-        <el-tab-pane label="我的菜谱">
-            <user-recipe></user-recipe>
-        </el-tab-pane>
-        <!--<el-tab-pane label="我的收藏">-->
+        <div style="margin-bottom: 60px;">
+          <el-tabs type="border-card">
+            <el-tab-pane label="我的菜谱">
+              <user-recipe></user-recipe>
+            </el-tab-pane>
+            <!--<el-tab-pane label="我的收藏">-->
             <!--<user-collection></user-collection>-->
-        <!--</el-tab-pane>-->
-        <el-tab-pane label="关注达人">
-            <user-attention></user-attention>
-        </el-tab-pane>
-        <el-tab-pane label="参加活动">
-            <user-join-activity></user-join-activity>
-        </el-tab-pane>
-      </el-tabs>
+            <!--</el-tab-pane>-->
+            <el-tab-pane label="关注达人">
+              <user-attention></user-attention>
+            </el-tab-pane>
+            <el-tab-pane label="参加活动">
+              <user-join-activity></user-join-activity>
+            </el-tab-pane>
+          </el-tabs>
+        </div>
+
+      </div>
     </div>
+    <my-footer></my-footer>
   </div>
 
 </template>
@@ -34,6 +40,7 @@
   import userAttention from './userAttention'
   import userJoinActivity from './userJoinActivity'
   import userRecipe from './userRecipe'
+  import myFooter from "../Footer"
     export default {
       name: "user",
       data(){
@@ -46,14 +53,15 @@
         userCollection,
         userAttention,
         userJoinActivity,
-        userRecipe
+        userRecipe,
+        myFooter
       },
       mounted(){
         console.log(this.$store.state.userId)
         this.$ajax.get(`/api/users/getUser/${this.$store.state.userId}`).then(res => {
           // console.log(res.data.data[0])
           this.userInfo = res.data.data[0];
-          this.userInfo.headPhoto = 'http://localhost:3000/headImg/'+this.userInfo.headPhoto
+          this.userInfo.headPhoto = this.userInfo.headPhoto
         })
       }
     }

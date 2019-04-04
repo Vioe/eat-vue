@@ -16,7 +16,7 @@
                   <!--<i class="iconfont icon-shuiguo"></i>-->
                   <div>{{index+1}}</div>
                 </div>
-                <div class="userHeadPic"><img :src="item.headPhoto" alt=""></div>
+                <div class="userHeadPic"><img class="img" :src="item.headPhoto" alt=""></div>
               </div>
               <div class="userRight">
                 <p class="txt1">{{item.userName}}</p>
@@ -53,7 +53,7 @@
 
 <style rel="stylesheet/scss" lang="scss" scoped>
 .recipe{
-    .left{
+  .left{
       width: 770px;
       .leftTit{
         padding: 0 0 0 17px;
@@ -95,6 +95,10 @@
         }
       }
     }
-
+  .userHeadPic{
+    width: 70px;
+    height: 70px;
+    overflow: hidden;
+  }
 }
 </style>

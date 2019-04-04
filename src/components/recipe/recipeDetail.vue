@@ -1,30 +1,32 @@
 <template>
-  <div class="content">
-    <div class="recipeDetail flex">
-      <!--左边菜谱的步骤列表-->
-      <div class="left">
-        <div><img :src="recipe.recipeCoverImg" class="img" alt=""></div>
-        <h2 class="recipeName">{{recipe.recipeName}}</h2>
-        <div class="flex flex-h-cen flex-btw">
-          <div class="num-l flex">
-            <div><i class="iconfont icon-shoucang"></i>点赞{{recipe.recipePraiseNum}}人</div>
-            <div style="margin-left: 10px;"><i class="iconfont icon-edit"></i>留言{{comment.length}}条</div>
+  <div>
+    <div class="content">
+      <div class="recipeDetail flex">
+        <!--左边菜谱的步骤列表-->
+        <div class="left">
+          <div><img :src="recipe.recipeCoverImg" class="img" alt=""></div>
+          <h2 class="recipeName">{{recipe.recipeName}}</h2>
+          <div class="flex flex-h-cen flex-btw">
+            <div class="num-l flex">
+              <div><i class="iconfont icon-shoucang"></i>点赞{{recipe.recipePraiseNum}}人</div>
+              <div style="margin-left: 10px;"><i class="iconfont icon-edit"></i>留言{{comment.length}}条</div>
+            </div>
+            <div class="num-r flex">
+              <div class="bt text-center">收藏</div>
+              <div class="bt text-center">点赞</div>
+            </div>
           </div>
-          <div class="num-r flex">
-            <div class="bt text-center">收藏</div>
-            <div class="bt text-center">点赞</div>
+          <!--作者信息-->
+          <div class="userInfo">
+            <div class="u-top flex flex-h-cen">
+              <div class="u-pic"><img :src="recipe.headPhoto" alt=""></div>
+              <div class="u-name">{{recipe.userName}}</div>
+              <div class="u-att text-center color-w" @click="attentionUser" v-if="att">+关注</div>
+              <div class="u-att text-center color-w" @click="noAttention" v-else>已关注</div>
+            </div>
+            <div class="u-bot">{{recipe.recipeBrief}}</div>
           </div>
-        </div>
-        <!--作者信息-->
-        <div class="userInfo">
-          <div class="u-top flex flex-h-cen">
-            <div class="u-pic"><img :src="recipe.headPhoto" alt=""></div>
-            <div class="u-name">{{recipe.userName}}</div>
-            <div class="u-att text-center color-w" @click="attentionUser">+关注</div>
-          </div>
-          <div class="u-bot">{{recipe.recipeBrief}}</div>
-        </div>
-        <!--调味料-->
+          <!--调味料-->
           <ul class="foodList">
             <li class="flex flex-h-cen food-r">
               <div class="foodName tit">食材名</div>
@@ -35,55 +37,58 @@
               <div class="foodNum">{{list.foodNum}}</div>
             </li>
           </ul>
-        <!--步骤图文介绍-->
-        <div class="stepList">
-          <div class="step flex" v-for="(step,index) in recipeStep">
-            <div class="stepL"><img :src="step.recipeStepImg" class="img" alt=""></div>
-            <div class="stepR">
-              <div class="stepNum">第{{index+1}}步</div>
-              <div class="stepCtn">{{step.recipeStepBrief}}</div>
-            </div>
-          </div>
-        </div>
-        <!--菜谱评论-->
-        <recipe-comment @all-comment="getCom"></recipe-comment>
-        <!--全部评论-->
-        <div class="cm">
-          <h3 class="commentT">全部评论</h3>
-          <div class="allComment" v-for="(item,i) in comment" v-if="i<n">
-            <div class="user flex flex-h-cen">
-              <div class="userHead"><img class="img" :src="item.headPhoto" alt=""></div>
-              <div class="userName flex flex-f1 flex-btw">
-                <div>{{item.userName}}</div>
-                <div class="pointer" style="color:red;cursor: pointer;" v-if="item.userId == userId" @click="delComment(item.commentId)">删除</div>
+          <!--步骤图文介绍-->
+          <div class="stepList">
+            <div class="step flex" v-for="(step,index) in recipeStep">
+              <div class="stepL"><img :src="step.recipeStepImg" class="img" alt=""></div>
+              <div class="stepR">
+                <div class="stepNum">第{{index+1}}步</div>
+                <div class="stepCtn">{{step.recipeStepBrief}}</div>
               </div>
             </div>
-            <div class="commentC" v-html="item.commentContent"></div>
           </div>
-          <div v-if="comment.length==0" class="text-center " >暂无评论~</div>
-          <div v-else-if="comment.length<=n"></div>
-          <div @click="onload" v-else-if="show" class="pointer aa flex flex-cen" ><i class="iconfont icon-zhongxinjiazai"></i>加载更多</div>
-          <div @click="hidden" v-if="unshow" class="pointer aa flex flex-cen" ><i class="iconfont icon-ziyuanldpi"></i>收起</div>
+          <!--菜谱评论-->
+          <recipe-comment @all-comment="getCom"></recipe-comment>
+          <!--全部评论-->
+          <div class="cm">
+            <h3 class="commentT">全部评论</h3>
+            <div class="allComment" v-for="(item,i) in comment" v-if="i<n">
+              <div class="user flex flex-h-cen">
+                <div class="userHead"><img class="img" :src="item.headPhoto" alt=""></div>
+                <div class="userName flex flex-f1 flex-btw">
+                  <div>{{item.userName}}</div>
+                  <div class="pointer" style="color:red;cursor: pointer;" v-if="item.userId == userId" @click="delComment(item.commentId)">删除</div>
+                </div>
+              </div>
+              <div class="commentC" v-html="item.commentContent"></div>
+            </div>
+            <div v-if="comment.length==0" class="text-center " >暂无评论~</div>
+            <div v-else-if="comment.length<=n"></div>
+            <div @click="onload" v-else-if="show" class="pointer aa flex flex-cen" ><i class="iconfont icon-zhongxinjiazai"></i>加载更多</div>
+            <div @click="hidden" v-if="unshow" class="pointer aa flex flex-cen" ><i class="iconfont icon-ziyuanldpi"></i>收起</div>
+          </div>
         </div>
-      </div>
-      <!--右边热门菜谱-->
-      <div class="right flex-f1">
-        <div class="hotRecipe">热门菜谱</div>
-        <div class="recipeList flex" v-for="item in hotRecipe">
-          <div class="recipePic"><img :src="item.recipeCoverImg" class="img" alt=""></div>
-          <div class="recipeTxt flex-f1">
-            <router-link :to="'/recipeDetail/'+item.detailsId">
-               <h3 class="recipeTit">{{item.recipeName}}</h3>
-            </router-link>
-            <div class="recipeCtn line-clamp3">{{item.recipeBrief}}</div>
+        <!--右边热门菜谱-->
+        <div class="right flex-f1">
+          <div class="hotRecipe">热门菜谱</div>
+          <div class="recipeList flex" v-for="item in hotRecipe">
+            <div class="recipePic"><img :src="item.recipeCoverImg" class="img" alt=""></div>
+            <div class="recipeTxt flex-f1">
+              <router-link :to="'/recipeDetail/'+item.detailsId">
+                <h3 class="recipeTit">{{item.recipeName}}</h3>
+              </router-link>
+              <div class="recipeCtn line-clamp3">{{item.recipeBrief}}</div>
+            </div>
           </div>
         </div>
       </div>
     </div>
+    <appFooter></appFooter>
   </div>
 </template>
 
 <script>
+  import appFooter from "../Footer"
     import recipeComment from './recipeComment'
     export default {
         name: "recipeDetail",
@@ -100,10 +105,12 @@
             n:3,
             show:true,
             unshow:false,
+            att:true
           }
       },
       components:{
-        recipeComment
+        recipeComment,
+        appFooter
       },
       methods:{
         delComment(commentId){
@@ -145,13 +152,27 @@
             console.log(this.recipe)
             this.recipeFood = this.allDate.recipeFood;
             this.recipeStep = this.allDate.recipeStep;
+            this.$ajax.get(`/api/users/isAttUser/${this.recipe.userId}/${this.$store.state.userId}`).then(res => {
+              console.log(res.data.data[0].count)
+              if(res.data.data[0].count == 1){
+                this.att = !this.att;
+              }
+            })
           })
         },
         attentionUser(){
           this.$ajax.get(`/api/users/myAttention/${this.recipe.userId}/${this.$store.state.userId}`).then(res => {
             console.log(res)
+            if(res.data.code == 200){
+              this.att = !this.att;
+            }
           })
-        }
+        },
+        noAttention(){
+          this.$ajax.get(`/api/users/delAttentionUser/${this.recipe.userId}/${this.$store.state.userId}`).then(res => {
+              this.att = !this.att;
+            })
+          }
       },
       watch:{
         "$route": "mount"
@@ -166,12 +187,14 @@
           this.$ajax.get(`/api/recipe/comment/${this.detailId}`).then(res => {
             this.comment = res.data.data;
           })
+
       }
     }
 </script>
 
 <style scoped lang="scss">
 .recipeDetail{
+  margin-bottom: 60px;
   .aa{
     i{
       margin-right: 3px;

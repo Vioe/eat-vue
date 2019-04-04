@@ -39,10 +39,10 @@
             <el-input v-model="form.name" placeholder="请输入用户名"></el-input>
           </el-form-item>
           <el-form-item class="text-center" label="设置密码">
-            <el-input v-model="form.password" placeholder="请输入输入密码"></el-input>
+            <el-input v-model="form.password" type="password" placeholder="请输入输入密码"></el-input>
           </el-form-item>
           <el-form-item class="text-center" label="确认密码">
-            <el-input v-model="form.password1" placeholder="请输入确认密码"></el-input>
+            <el-input v-model="form.password1" type="password" placeholder="请输入确认密码"></el-input>
           </el-form-item>
           <el-form-item class="text-center" label="性别">
             <el-radio v-model="form.radio" label="1">男</el-radio>
