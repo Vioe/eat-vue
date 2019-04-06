@@ -242,6 +242,7 @@
           line-height: 25px;
           background-color: #91bfbf;
           border-radius: 4px;
+          cursor: pointer;
         }
       }
       .u-bot{

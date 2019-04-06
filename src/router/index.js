@@ -15,6 +15,11 @@ import personalCenter from "../components/user/user"
 import addRecipe from "../components/recipe/addRecipe"
 import recipeDetail from "../components/recipe/recipeDetail"
 import reviseInfo from "../components/user/reviseInfo"
+import admin from "../components/admin/admin"
+import adminInfo from "../components/admin/adminInfo"
+import articleManger from "../components/admin/articleManger"
+import activityManger from "../components/admin/activityManger"
+import addActivity from "../components/admin/addActivity"
 
 
 
@@ -40,7 +45,7 @@ export default new Router({
     //达人区
     {path: '/district', name: 'district', component: DaRenDistrict},
     //活动
-    {path: '/activity', name: 'activity', component: Activity},
+    {path: '/activity/:activityId', name: 'activity', component: Activity},
     //个人中心
     {path: '/personalCenter', name: 'personalCenter', component: personalCenter},
     //写菜谱
@@ -51,5 +56,15 @@ export default new Router({
     {path: '/reviseInfo', name: 'reviseInfo', component: reviseInfo},
     //文章详情
     {path: '/articleDetail/:articleId', name: 'articleDetail', component: articleDetail},
+    //后台管理员登入
+    {path: '/admin', name: 'admin', component: admin},
+    //后台管理员操作
+    {path: '/adminInfo', name: 'adminInfo', component: adminInfo,children:[
+      {path: "", component: activityManger},
+      {path:'/articleManger',component:articleManger},
+      {path:'/activityManger',component:activityManger},
+      {path:'/addActivity',component:addActivity}
+    ]},
+    // {path: '/articleManger', name: 'articleManger', component: articleManger},
   ]
 })

@@ -16,10 +16,10 @@
                 <router-link to="/register"><div>注册</div></router-link>
               </div>
               <!--登入-->
-              <div class="icon" v-else>
+              <div class="icon" v-else style="cursor: pointer;">
                 <el-dropdown :hide-on-click="false">
                     <span class="el-dropdown-link flex flex-h-cen">
-                      <i class="iconfont people icon-gerenzhongxin1"></i>{{userName}}
+                      <i class="iconfont people icon-gerenzhongxin1" ></i>{{userName}}
                     </span>
                     <el-dropdown-menu slot="dropdown">
                       <router-link to="/personalCenter"><el-dropdown-item>个人中心</el-dropdown-item></router-link>

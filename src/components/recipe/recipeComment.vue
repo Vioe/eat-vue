@@ -144,6 +144,7 @@
     border-radius: 4px;
     color: #EEEEEE;
     background-color: #91bfbf;
+    cursor: pointer;
   }
   .make_face>img,.btn{
     margin-top: 15px;

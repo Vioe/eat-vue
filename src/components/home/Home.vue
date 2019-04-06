@@ -14,8 +14,8 @@
             <div class="articleRight flex-f1">
              <router-link :to="'/articleDetail/'+item.articleId"><h3 style="padding-bottom: 6px;">{{item.articleTitle}}</h3></router-link>
               <div class="line-clamp3">{{item.articleContent}}</div>
-              <div class="icon" v-if="praise && `att${index}`"><i @click="addPraiseNum(item.articleId,index)" class="iconfont icon-dianzan" ></i>{{item.articlePraiseNum}}</div>
-              <div class="icon" v-else><i @click="subPraiseNum(item.articleId,index)" class="iconfont icon-dianzan" style="color: red;"></i>{{item.articlePraiseNum}}</div>
+              <div class="icon" v-if="att.indexOf(index)== -1"><i @click="addPraiseNum(item.articleId,index)" class="iconfont icon-dianzan" ></i><span style="display: inline-block;width: 20px;">{{item.articlePraiseNum}}</span></div>
+              <div class="icon" v-else><i @click="subPraiseNum(item.articleId,index)" class="iconfont icon-dianzan" style="color: red;"></i><span style="display: inline-block;width: 20px;">{{item.articlePraiseNum}}</span></div>
             </div>
           </div>
         </div>
@@ -68,7 +68,7 @@
           <div class="activityTit h-five color-w">近期活动</div>
           <div class="flex flex-btw">
             <div class="activityList" v-for="activity in activitys">
-              <router-link :to="'/activityDetail/'+activity.activityId">
+              <router-link :to="'/activity/'+activity.activityId">
                 <div class="activityBackUrl">
                   <img :src="activity.activityImg" alt="">
                 </div>
@@ -104,8 +104,8 @@
             threeArticle:[],
             random:[],
             allRecipe:[],
-            praise: true,
-            d: null
+            d: null,
+            att:[1]
           }
       },
       components:{
@@ -161,16 +161,17 @@
         },
         addPraiseNum(articleId,index){
           console.log(articleId)
-          this.threeArticle[index].articlePraiseNum += 1;
-          this.$ajax.get(`/api/addPriseNum/${articleId}`).then(res => {
-            console.log(res)
-            this.praise = false;
-
-          })
+          if(this.att.indexOf(index) == -1){
+            this.att.push(index)
+            this.threeArticle[index].articlePraiseNum += 1;
+            this.$ajax.get(`/api/addPriseNum/${articleId}`).then(res => {
+              console.log(res)
+            })
+          }
         },
         subPraiseNum(articleId,index){
           this.threeArticle[index].articlePraiseNum -= 1;
-          this.praise = true;
+          this.att.splice(this.att.indexOf(index),1);
         }
       },
       destroyed(){

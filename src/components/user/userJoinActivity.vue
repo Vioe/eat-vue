@@ -2,9 +2,11 @@
     <div class="joinActivity">
       <div class="inner">
         <div class="myRecipe" v-for="item in allActivity">
+          <router-link :to="'/activity/'+item.activityId">
             <div class="recipe-Pic">
               <img :src="item.activityImg" alt="">
             </div>
+          </router-link>
           <div class="recipe-txt">
             <div>{{item.activityName}}</div>
             <div style="text-align: right;">{{item.activityState}}</div>
