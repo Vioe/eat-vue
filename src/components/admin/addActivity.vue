@@ -28,8 +28,8 @@
             <el-form-item label="文章大图">
               <div>
                 <label for="recipe">
-                  <!--<img class="brower" :src="updatePic" alt="">-->
-                  <div class="recipeBig flex flex-cen" >
+                  <img class="brower" :src="updatePic" alt="">
+                  <div class="recipeBig flex flex-cen" v-if="showUp">
                     <i class="icon iconfont icon-jia3"></i>
                   </div>
                 </label>
@@ -52,7 +52,7 @@
                      :model="form">
               <el-form-item label="文章简介">
                 <el-input type="textarea"
-                          v-model="form.dieltSyon"
+                          v-model="form.articleCtn"
                           :autosize="{ minRows: 3, maxRows: 20}"
                 ></el-input>
               </el-form-item>
@@ -76,17 +76,36 @@
             form:{
               articleTitle:"",
               classify:"",
-              articleBrief:""
+              articleBrief:"",
+              articleCtn:""
             },
-            articleTitle:""
+            articleTitle:"",
+            showUp: true,
+            updatePic:"",
+            articlePic:"",
           }
       },
       methods:{
-        showBasicPh(){
-
+        showBasicPh(e){
+          console.log(e.target.files[0])
+          let file = e.target.files[0]
+          this.articlePic = file;
+          var reader=new FileReader();
+          reader.onload=function(event){
+            console.log(event.target.result)
+            document.querySelector(".brower").src=event.target.result;
+          }
+          reader.readAsDataURL(file);
+          this.showUp = false;
         },
         onSubmit() {
-          console.log('submit!');
+          console.log(this.form);
+          let zipFormData = new FormData();
+          zipFormData.append('filename', this.articlePic);
+          zipFormData.append('myDate', JSON.stringify(this.form));
+          this.$ajax.post('/api/article/addArticle',zipFormData).then(res => {
+              console.log(res)
+          })
         }
       }
     }
@@ -99,6 +118,9 @@
   }
   /deep/ .el-input__inner{
     width: 289.66px;
+  }
+  /deep/ .el-button--primary{
+    background-color: #91bfbf;
   }
   .recipeBig{
     width: 100px;
