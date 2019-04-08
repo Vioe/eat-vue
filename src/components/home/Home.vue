@@ -12,7 +12,7 @@
           <div class="articleList flex" v-for="(item,index) in threeArticle">
             <div class="articleLeft"><img :src="item.articlePic" alt=""></div>
             <div class="articleRight flex-f1">
-             <router-link :to="'/articleDetail/'+item.articleId"><h3 style="padding-bottom: 6px;">{{item.articleTitle}}</h3></router-link>
+             <router-link :to="'/articleDetail/'+item.articleId"><h3 class="line-clamp1" style="padding-bottom: 6px;">{{item.articleTitle}}</h3></router-link>
               <div class="line-clamp3">{{item.articleContent}}</div>
               <div class="icon" v-if="att.indexOf(index)== -1"><i @click="addPraiseNum(item.articleId,index)" class="iconfont icon-dianzan" ></i><span style="display: inline-block;width: 20px;">{{item.articlePraiseNum}}</span></div>
               <div class="icon" v-else><i @click="subPraiseNum(item.articleId,index)" class="iconfont icon-dianzan" style="color: red;"></i><span style="display: inline-block;width: 20px;">{{item.articlePraiseNum}}</span></div>

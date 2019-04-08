@@ -143,6 +143,9 @@
             font-weight: bold;
             padding: 0 0 12px 0;
           }
+          .articleCtn{
+            min-height: 64px;
+          }
           .articleTime1{
             i{
               margin-right: 6px;

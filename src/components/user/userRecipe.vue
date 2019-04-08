@@ -3,8 +3,8 @@
       <div class="inner">
         <div class="myRecipe" v-for="item in myRecipe">
           <router-link :to="'/recipeDetail/'+item.detailsId">
-            <div class="recipe-Pic">
-              <img :src="item.recipeCoverImg" alt="">
+            <div class="recipe-Pic" style="height: 128px;overflow-y: hidden;">
+              <img :src="item.recipeCoverImg" alt="" style="width:100%;">
             </div>
           </router-link>
           <div class="recipe-txt flex flex-btw">
@@ -22,15 +22,23 @@
         name: "userRecipe",
         data(){
             return {
-              myRecipe:[]
+              myRecipe:[],
+              recipeUserId:""
             }
         },
         mounted(){
           console.log("我的菜谱")
+          if(this.$route.params.userId == undefined){
+            this.recipeUserId = this.$store.state.userId
             this.$ajax.get(`/api/getMyRecipe/${this.$store.state.userId}`).then( res => {
-              // console.log(res.data.data)
               this.myRecipe = res.data.data;
             })
+          }else{
+            this.recipeUserId = this.$route.params.userId
+            this.$ajax.get(`/api/getMyRecipe/${this.recipeUserId}`).then( res => {
+              this.myRecipe = res.data.data;
+            })
+          }
         },
         methods:{
           delRecipe(detailId){
@@ -41,8 +49,8 @@
               cancelButtonText: '取消',
               type: 'warning'
             }).then(() => {
-              this.$ajax.get(`/api/recipe/delRecipe/${this.$store.state.userId}/${detailId}`).then(res => {
-                this.$ajax.get(`/api/getMyRecipe/${this.$store.state.userId}`).then( res => {
+              this.$ajax.get(`/api/recipe/delRecipe/${this.recipeUserId}/${detailId}`).then(res => {
+                this.$ajax.get(`/api/getMyRecipe/${this.recipeUserId}`).then( res => {
                   // console.log(res.data.data)
                   this.myRecipe = res.data.data;
                   this.$message({

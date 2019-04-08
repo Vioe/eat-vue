@@ -16,7 +16,9 @@
                   <!--<i class="iconfont icon-shuiguo"></i>-->
                   <div>{{index+1}}</div>
                 </div>
-                <div class="userHeadPic"><img class="img" :src="item.headPhoto" alt=""></div>
+                <router-link :to="`/personalCenter/${item.userId}`">
+                  <div class="userHeadPic"><img class="img" :src="item.headPhoto" alt=""></div>
+                </router-link>
               </div>
               <div class="userRight">
                 <p class="txt1">{{item.userName}}</p>

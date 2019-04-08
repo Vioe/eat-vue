@@ -2,7 +2,7 @@
   <div>
     <div class="contentLogin">
       <div class="login">
-        <h3 class="text-center tit">admin</h3>
+        <h3 class="text-center tit">嗨，管理员</h3>
         <el-form ref="form" :model="form" label-width="80px">
           <el-form-item class="text-center" label="用户名">
             <el-input v-model="userName" placeholder="请输入用户名"></el-input>
@@ -60,17 +60,12 @@
     margin: 0 auto;
     position: relative;
     top:150px;
-    /*margin-bottom:200px;*/
-    /*background-color: #ebf6df;*/
   }
   /*修改element样式*/
   /deep/ .el-input__inner:focus{
     border-color: #91bfbf !important;
   }
   /deep/ .el-form-item__label{
-    /*width: 60px !important;*/
-    /*text-align: center !important;*/
-    /*padding:0;*/
     text-align:justify;
     text-justify:distribute-all-lines;/*ie6-8*/
     text-align-last:justify;/* ie9*/

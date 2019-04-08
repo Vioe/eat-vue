@@ -18,7 +18,8 @@
       name: "userAttention",
       data() {
         return {
-          attentionUser: []
+          attentionUser: [],
+          attUserId:""
         }
       },
       computed: mapGetters([
@@ -26,9 +27,17 @@
         "userId"
       ]),
       mounted() {
-        this.$ajax.get(`/api/users/attention/${this.userId}`).then(res => {
-          this.attentionUser = res.data.data;
-        })
+        if(this.$route.params.userId == undefined){
+          this.attUserId = this.userId
+          this.$ajax.get(`/api/users/attention/${this.attUserId}`).then(res => {
+            this.attentionUser = res.data.data;
+          })
+        }else{
+          this.attUserId = this.$route.params.userId
+          this.$ajax.get(`/api/users/attention/${this.attUserId}`).then(res => {
+            this.attentionUser = res.data.data;
+          })
+        }
       },
       methods: {
         delUser(attUserId) {
@@ -37,8 +46,8 @@
             cancelButtonText: '取消',
             type: 'warning'
           }).then(() => {
-            this.$ajax.get(`/api/users/delAttentionUser/${attUserId}/${this.userId}`).then(res => {
-              this.$ajax.get(`/api/users/attention/${this.userId}`).then(res => {
+            this.$ajax.get(`/api/users/delAttentionUser/${attUserId}/${this.attUserId}`).then(res => {
+              this.$ajax.get(`/api/users/attention/${this.attUserId}`).then(res => {
                 this.attentionUser = res.data.data;
                 this.$message({
                   type: 'success',

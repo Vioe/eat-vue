@@ -57,12 +57,18 @@
         myFooter
       },
       mounted(){
-        console.log(this.$store.state.userId)
-        this.$ajax.get(`/api/users/getUser/${this.$store.state.userId}`).then(res => {
-          // console.log(res.data.data[0])
-          this.userInfo = res.data.data[0];
-          this.userInfo.headPhoto = this.userInfo.headPhoto
-        })
+        console.log(this.$route.params.userId)
+        if(this.$route.params.userId == undefined){
+          this.$ajax.get(`/api/users/getUser/${this.$store.state.userId}`).then(res => {
+            this.userInfo = res.data.data[0];
+            this.userInfo.headPhoto = this.userInfo.headPhoto
+          })
+        }else{
+          this.$ajax.get(`/api/users/getUser/${this.$route.params.userId}`).then(res => {
+            this.userInfo = res.data.data[0];
+            this.userInfo.headPhoto = this.userInfo.headPhoto
+          })
+        }
       }
     }
 </script>
@@ -73,6 +79,9 @@
   }
   /deep/ .el-tabs--border-card>.el-tabs__header .el-tabs__item.is-active{
     color: #c1a174;
+  }
+  /deep/ .el-tabs--border-card>.el-tabs__content{
+    min-height:64px;
   }
   .personalCenter{
     .userInfoBack{

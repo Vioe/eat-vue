@@ -22,7 +22,8 @@
         name: "userJoinActivity",
         data(){
           return {
-            allActivity:[]
+            allActivity:[],
+            activityUserId:""
           }
         },
         computed: mapGetters([
@@ -30,13 +31,15 @@
           "userId"
         ]),
         mounted(){
-          this.$ajax.get(`/api/users/joinActivity/${this.userId}`).then(res => {
-            console.log("用户参与活动")
-            console.log(res.data.data)
+          if(this.$route.params.userId == undefined){
+            this.activityUserId = this.userId;
+          }else{
+            this.activityUserId = this.$route.params.userId;
+          }
+          this.$ajax.get(`/api/users/joinActivity/${this.activityUserId}`).then(res => {
             this.allActivity = res.data.data;
           })
         }
-
     }
 </script>
 

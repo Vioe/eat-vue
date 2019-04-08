@@ -121,6 +121,7 @@
   }
   /deep/ .el-button--primary{
     background-color: #91bfbf;
+    border: 1px solid #91bfbf;
   }
   .recipeBig{
     width: 100px;

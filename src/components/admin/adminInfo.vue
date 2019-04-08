@@ -33,6 +33,18 @@
                     </router-link>
                   </el-menu-item-group>
                 </el-submenu>
+                <router-link role="presentation" to="/recipeManger" tag="li">
+                  <el-menu-item index="3">
+                    <i class="el-icon-document"></i>
+                    <span slot="title">菜谱管理</span>
+                  </el-menu-item>
+                </router-link>
+                <router-link role="presentation" to="/commentManger" tag="li">
+                  <el-menu-item index="4">
+                    <i class="el-icon-message"></i>
+                    <span slot="title">评论管理</span>
+                  </el-menu-item>
+                </router-link>
               </el-menu>
             </el-col>
           </el-row>

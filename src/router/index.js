@@ -20,6 +20,8 @@ import adminInfo from "../components/admin/adminInfo"
 import articleManger from "../components/admin/articleManger"
 import activityManger from "../components/admin/activityManger"
 import addActivity from "../components/admin/addActivity"
+import recipeManger from "../components/admin/recipeManger"
+import commentManger from "../components/admin/commentManger"
 
 
 
@@ -47,7 +49,9 @@ export default new Router({
     //活动
     {path: '/activity/:activityId', name: 'activity', component: Activity},
     //个人中心
-    {path: '/personalCenter', name: 'personalCenter', component: personalCenter},
+    {path: '/personalCenter', name: 'personalCenter', component: personalCenter,children:[
+      {path: ":userId", component: personalCenter},
+    ]},
     //写菜谱
     {path: '/addRecipe', name: 'addRecipe', component: addRecipe},
     //菜谱详情
@@ -63,7 +67,9 @@ export default new Router({
       {path: "", component: activityManger},
       {path:'/articleManger',component:articleManger},
       {path:'/activityManger',component:activityManger},
-      {path:'/addActivity',component:addActivity}
+      {path:'/addActivity',component:addActivity},
+      {path:'/recipeManger',component:recipeManger},
+      {path:'/commentManger',component:commentManger}
     ]},
     // {path: '/articleManger', name: 'articleManger', component: articleManger},
   ]
