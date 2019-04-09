@@ -46,15 +46,13 @@
       }
     },
     watch:{
-      // "$route":"getPicture"
+      "$route": "mounted"
     },
     mounted() {
       var that = this
       this.$ajax.get('/api/recipe').then( res => {
-        console.log(res.data.data)
         this.allPic = res.data.data;
         this.items = this.allPic
-        console.log("哈哈2" + this.allPic)
         var count = 7
         console.log(this.items.slice(count * this.page, count * (this.page + 1)))
         this.dataArr = [];
@@ -76,11 +74,8 @@
       VueStar
     },
     methods:{
-      handleClick(){
 
-      }
     }
-
   }
 </script>
 

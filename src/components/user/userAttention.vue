@@ -3,7 +3,7 @@
         <div class="flex flex-wrap flex-btw">
           <div class="attUser flex flex-btw flex-h-cen" v-for="item in attentionUser">
             <div class="attL flex flex-h-cen">
-              <div class="userHead"><img class="img" :src="item.headPhoto" alt=""></div>
+                <div class="userHead" @click="toUser(item.userId)"><img class="img" :src="item.headPhoto" alt=""></div>
               <div>{{item.userName}}</div>
             </div>
             <div class="attR" @click="delUser(item.userId)">取消关注</div>
@@ -61,6 +61,10 @@
               message: '已取消删除'
             });
           });
+        },
+        toUser(userId){
+          console.log(userId)
+          location.href = '/personalCenter/'+userId
         }
       }
     }

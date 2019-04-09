@@ -39,7 +39,9 @@
         if(this.userName !="" && this.userPwd !=""){
           if(this.userName == 'admin'){
             if(this.userPwd == 'admin'){
-              this.$router.push('/adminInfo');
+              // this.$router.push('/adminInfo');
+              location.href = "/adminInfo"
+              localStorage.setItem("admin", "admin")
             }else{
               alert("密码错误")
             }
@@ -99,6 +101,7 @@
       line-height: 34px;
       font-size: 17px;
       color:#FFFFFF;
+      cursor: pointer;
     }
     .ico{
       width: 80px;

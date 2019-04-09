@@ -283,6 +283,7 @@
     .icoLoad{
        width: 28px;
        margin:0 auto;
+       cursor: pointer;
       i{
         font-size:28px;
       }

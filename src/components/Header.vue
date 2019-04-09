@@ -22,8 +22,10 @@
                       <i class="iconfont people icon-gerenzhongxin1" ></i>{{userName}}
                     </span>
                     <el-dropdown-menu slot="dropdown">
-                      <router-link to="/personalCenter"><el-dropdown-item>个人中心</el-dropdown-item></router-link>
-                      <el-dropdown-item @click.native="setOut">退出</el-dropdown-item>
+                      <div v-if="!ad">
+                        <div @click="toPersonal"><el-dropdown-item>个人中心</el-dropdown-item></div>
+                      </div>
+                        <el-dropdown-item @click.native="setOut">退出</el-dropdown-item>
                     </el-dropdown-menu>
                 </el-dropdown>
               </div>
@@ -46,7 +48,8 @@
            ],
            num:0,
            login: null,
-           userName:""
+           userName:"",
+           ad:localStorage.getItem('admin')
          }
       },
       computed: mapGetters([
@@ -55,6 +58,11 @@
       ]),
       mounted(){
         if(!this.isLogin){
+          console.log(localStorage.getItem("admin"))
+          if(localStorage.getItem("admin")){
+            this.userName = localStorage.getItem("admin");
+            return;
+          }
           this.$ajax.get(`/api/users/getUser/${this.userId}`).then(res => {
             console.log("我是用户名")
             console.log(res.data.data)
@@ -66,7 +74,11 @@
       methods: {
         setOut(){
           localStorage.removeItem("userId");
+          localStorage.removeItem("admin");
           location.href = "/"
+        },
+        toPersonal(){
+          location.href = '/personalCenter'
         }
       }
     }

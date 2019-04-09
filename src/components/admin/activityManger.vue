@@ -1,7 +1,7 @@
 <template>
     <div>
       <el-table
-        :data="tableData"
+        :data="myActData1"
         style="width: 100%"
         max-height="400">
         <el-table-column
@@ -35,7 +35,7 @@
           width="120">
           <template slot-scope="scope">
             <el-button
-              @click.native.prevent="deleteRow(scope.$index, tableData)"
+              @click.native.prevent="deleteRow(scope.$index, myActData1)"
               type="text"
               size="small">
               删除
@@ -43,6 +43,20 @@
           </template>
         </el-table-column>
       </el-table>
+      <!--分页-->
+      <div class="row text-center activityPage">
+        <div class="block">
+          <span class="demonstration" ></span>
+          <el-pagination ref="elpage"
+                         @current-change="change()"
+                         :current-page.sync="pageIndex"
+                         layout="prev, pager, next"
+                         :total="pageCount"
+                         :page-size = "pagesize"
+          >
+          </el-pagination>
+        </div>
+      </div>
     </div>
 </template>
 
@@ -51,29 +65,54 @@
       name: "activityManger",
       data(){
         return {
-          tableData: []
+          tableData: [],
+          pageIndex: 1,
+          pagesize: 5,
+          pageCount:0,
+          activity:[],
+          all: {}
+        }
+      },
+      computed:{
+        myActData1() {
+          return this.activity
         }
       },
       mounted(){
         this.$ajax.get('/api/activity/getAdminActivity').then( res => {
           console.log(res.data.data)
           this.tableData = res.data.data;
+          this.pageCount = this.tableData.length;
+          this.loadData()
         })
       },
       methods: {
         deleteRow(index, rows) {
-          console.log(index)
-          console.log(this.tableData[index].activityId)
-          this.$ajax.get(`/api/activity/delAdminActivity/${this.tableData[index].activityId}`).then( res =>{
+          this.$ajax.get(`/api/activity/delAdminActivity/${rows[index].activityId}`).then( res =>{
             rows.splice(index, 1)
           })
-        }
+        },
+        change(){
+          this.loadData();
+        },
+        loadData() {
+          this.activity = [];
+          let start = (this.pageIndex - 1) * this.pagesize;
+          let end = start + this.pagesize;
+          if (end >= this.pageCount){
+            end = this.pageCount
+          }
+          for (let i = start; i < end; i++) {
+            this.activity.push(this.tableData[i])
+          }
+          console.log(this.activity)
+        },
       },
     }
 </script>
 
 <style scoped lang="scss">
-/deep/ .el-button--text{
-  color: #f56c6c !important;
-}
+/*/deep/ .el-button--text{*/
+  /*color: #f56c6c !important;*/
+/*}*/
 </style>

@@ -25,7 +25,6 @@
       </div>
     </div>
     <!--分页-->
-    <!--分页-->
     <div class="row text-center activityPage">
       <div class="block">
         <span class="demonstration" ></span>
@@ -94,6 +93,12 @@
         let _this = this;
         this.$ajax.get('/api/article').then(res => {
           this.all = res.data.data
+          // for(let i=0;i<this.all.allDate.length;i++){
+          //     let date = this.all.allDate[i].articleTime.substr(0,10).split('-')
+          //     let k = Number(date[2])+1
+          //     this.all.allDate[i].articleTime = date[0]+'-'+date[1]+'-'+0+k
+          // }
+          // console.log(this.all.allDate[0].articleTime)
           this.dateTime = res.data.data.dateTime;
         })
         if(this.$route.params.year!=undefined){

@@ -5,7 +5,8 @@ Vue.use(Vuex);
 function isLogin() {
   var login = {};
   login.userId = localStorage.getItem("userId");
-  if (login.userId) {
+  login.admin = localStorage.getItem("admin");
+  if (login.userId || login.admin) {
     login.isLogin = false;
   } else {
     login.isLogin = true;

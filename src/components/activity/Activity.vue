@@ -7,7 +7,7 @@
         <div class="activityCtn">{{activity.activityContent}}</div>
         <div class="flex flex-btw btn">
           <div class="activityBtn text-center a">{{activity.activityState}}</div>
-          <div class="activityBtn text-center b">我要报名</div>
+          <div class="activityBtn text-center b" @click="join">我要报名</div>
         </div>
       </div>
       <div class="right flex-f1">
@@ -17,6 +17,7 @@
 </template>
 
 <script>
+    import {mapGetters} from "vuex"
     export default {
       name: "activity",
       data(){
@@ -24,12 +25,30 @@
           activity:[]
         }
       },
+      computed: mapGetters([
+        "isLogin",
+        "userId"
+      ]),
       mounted(){
         console.log(this.$route.params.activityId)
         this.$ajax.get(`/api/activity/activityDetail/${this.$route.params.activityId}`).then(res => {
           console.log(res.data.data[0])
           this.activity = res.data.data[0];
         })
+      },
+      methods:{
+        join(){
+          this.$ajax.get(`/api/activity/addActivityResult/${this.userId}/${this.$route.params.activityId}`).then(res => {
+            console.log(res.data.code)
+            if(res.data.code == 200){
+              this.$notify({
+                title: '成功',
+                message: '关注成功！',
+                type: 'success'
+              });
+            }
+          })
+        }
       }
     }
 </script>
